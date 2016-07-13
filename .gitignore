@@ -1,0 +1,8 @@
+*.o
+*.os
+*.a
+*.pyc
+*.so
+src/core/test
+src/core/build/*
+.sconsign.dblite

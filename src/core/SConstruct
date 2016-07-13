@@ -1,0 +1,31 @@
+from common_flags import *
+
+src = './src/'
+
+
+modules = [
+    Glob(src + 'types/*.cpp'),
+    Glob(src + 'types/graphics/*.cpp'),
+    Glob(src + 'types/spatial/*.cpp'),
+    Glob(src + 'modules/*.cpp'),
+    Glob(src + 'pipeline/*.cpp'),
+]
+env = Environment(CPPPATH=CPPATH)
+env.Append(LINKFLAGS=['-rdynamic'])
+
+env.SharedLibrary('engine', modules, LIBS=ALL_LIBS, LIBPATH='.', CXXFLAGS=COMMON_CXX_FLAGS, )
+env.Append(LINKFLAGS=['-Wl,-soname,libengine.so'])
+
+
+if 'test' in COMMAND_LINE_TARGETS:
+    test_modules = [
+        './src/test/test.cpp'
+    ]
+    
+    test_env = Environment(CPPPATH=CPPATH)
+    test_env.Program('./test', modules+test_modules, LIBS=ALL_LIBS+TEST_LIBS, LIBPATH='.', CXXFLAGS=COMMON_CXX_FLAGS, )
+    test_env.Append(LINKFLAGS=['-rdynamic'])
+
+
+
+
