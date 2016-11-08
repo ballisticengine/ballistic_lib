@@ -15,12 +15,12 @@ namespace Ballistic {
                 std::map<const std::string, const void *> modules;
             public:
 
-                template<typename T> void addModule(T *m, void *initData = 0, long int ordering = -1) {
+                template<typename T> void addModule(std::string name, T *m, void *initData = 0, long int ordering = -1) {
                     Module *module = (Module *) m;
                     if (initData) {
                         m->setInitData(initData);
                     }
-                    this->modules.insert(std::pair<std::string, void *>(module->getName(), (void *) m));
+                    this->modules.insert(std::pair<std::string, void *>(name, (void *) m));
                 }
 
                 template<typename T> T *getModule(const std::string name) {

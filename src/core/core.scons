@@ -1,0 +1,27 @@
+from site_scons import *
+
+src = './src/'
+
+
+modules = [
+    Glob(src + 'types/*.cpp'),
+    Glob(src + 'types/graphics/*.cpp'),
+    Glob(src + 'types/spatial/*.cpp'),
+    Glob(src + 'modules/*.cpp'),
+    Glob(src + 'pipeline/*.cpp'),
+]
+env = Environment(CPPPATH=CPPATH)
+env.Append(LINKFLAGS=['-rdynamic'])
+
+env.Library('core', modules, LIBS=ALL_LIBS, LIBPATH='.', CXXFLAGS=COMMON_CXX_FLAGS, )
+
+
+
+
+   
+    
+
+
+
+
+

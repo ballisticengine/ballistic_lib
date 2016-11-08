@@ -19,7 +19,6 @@ namespace Ballistic {
                 virtual void destroy() = 0;
                 friend class ModuleManager;
             public:
-                virtual std::string getName() = 0;
                 virtual void* getInitData();
             };
         }

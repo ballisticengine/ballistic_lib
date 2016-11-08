@@ -27,16 +27,13 @@ public:
         return this->test_text;
     }
 
-    std::string getName() {
-        return "test";
-    }
 
 };
 
 TEST(Functional, ManagerTest) {
     ModuleManager *m = new ModuleManager();
     TestModule tm, *tmp;
-    m->addModule(&tm);
+    m->addModule("test", &tm);
     tmp = m->getModule<TestModule>("test");
     m->initialize("test");
     ASSERT_STREQ("test text", tmp->getTest().c_str());
@@ -47,7 +44,7 @@ TEST(Functional, ManagerTest) {
 TEST(Functional, PipelineTest) {
     ModuleManager *m = new ModuleManager();
     Pipeline pp, *ppt;
-    m->addModule(&pp);
+    m->addModule("pipeline", &pp);
     m->initialize();
     ppt = m->getModule<Pipeline>("pipeline");
     
