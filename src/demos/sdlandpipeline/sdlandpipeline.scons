@@ -1,0 +1,10 @@
+from site_scons import *
+COREPATH = '../../core'
+print "SDLANDPIPELINE@!"
+env = Environment(CPPPATH=CPPATH+['./', COREPATH+'/src' ])
+
+modules = [
+    Glob('./*.cpp'),
+]
+
+env.Program('./rundemo', modules, LIBS=['core',]+SDL_LIBS, LIBPATH='../../../build', CXXFLAGS=COMMON_CXX_FLAGS, )

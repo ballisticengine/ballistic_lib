@@ -7,3 +7,4 @@ src/core/test
 src/core/build/*
 .sconsign.dblite
 /build/
+rundemo

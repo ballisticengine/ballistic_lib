@@ -1,11 +1,3 @@
 from site_scons import *
-COREPATH = '../../core'
+SConscript('./sdlandpipeline/sdlandpipeline.scons', variant='./sdlandpipeline/', duplicatie=0)
 
-env = Environment(CPPPATH=CPPATH+['./', COREPATH+'/src' ])
-
-modules = [
-    Glob('./*.cpp'),
-]
-
-env.Program('./main', modules, LIBS=['engine']+SDL_LIBS, LIBPATH=COREPATH, CXXFLAGS=COMMON_CXX_FLAGS, )
-env.Append(LINKFLAGS=['-rdynamic'])
