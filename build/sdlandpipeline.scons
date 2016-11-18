@@ -1,9 +1,0 @@
-from site_scons import *
-COREPATH = '../core'
-env = Environment(CPPPATH=CPPATH+['../src/demos', COREPATH ])
-
-modules = [
-    Glob('../src/demos/sdlandpipeline/*.cpp'),
-]
-
-env.Program('./sdlandpipeline', modules, LIBS=['core',]+SDL_LIBS, LIBPATH='../bin', CXXFLAGS=COMMON_CXX_FLAGS, )

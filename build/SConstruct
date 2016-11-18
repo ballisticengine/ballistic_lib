@@ -1,4 +1,5 @@
 from site_scons import *
 SConscript('core.scons', variant_dir='../bin', duplicate=0)
+SConscript('io.scons', variant_dir='../bin', duplicate=0)
 SConscript('test.scons', variant_dir='../bin', duplicate=0)
-SConscript('sdlandpipeline.scons', variant_dir='../bin', duplicate=0)
+SConscript('demo.sdlandpipeline.scons', variant_dir='../bin', duplicate=0)

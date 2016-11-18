@@ -1,1 +1,15 @@
+from site_scons import *
 
+src = '../src/io/'
+
+modules = [
+    Glob(src + 'Base/*.cpp'),
+    Glob(src + 'SDL/*.cpp'),
+   
+]
+
+
+env = Environment(CPPPATH=CPPATH)
+env.Append(LINKFLAGS=['-rdynamic'])
+
+env.Library('io', modules, LIBS=ALL_LIBS, LIBPATH='.', CXXFLAGS=COMMON_CXX_FLAGS, )
