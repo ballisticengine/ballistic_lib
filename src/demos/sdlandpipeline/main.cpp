@@ -57,11 +57,11 @@ public:
 
 int main() {
 
-    ModuleManager *m = new ModuleManager();
+    ModuleManager *m = ModuleManager::get();
     SdlIo sdlio, *p;
     m->addModule("sdlIo", &sdlio);
     m->initialize("sdlIo");
-    p = m->getModule<SdlIo>("sdlIo");
+    p = (SdlIo*)m->getModule("sdlIo");
     p->mainLoop();
     return 0;
 }

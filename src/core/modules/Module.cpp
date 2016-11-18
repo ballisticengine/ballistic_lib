@@ -12,6 +12,10 @@ namespace Ballistic {
             void* Module::getInitData() {
                 return this->initData;
             }
+
+            Module::Module() {
+                
+            }
         }
     }
 }

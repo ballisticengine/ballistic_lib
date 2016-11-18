@@ -11,7 +11,7 @@ modules = [
     Glob(src + 'pipeline/*.cpp'),
 ]
 env = Environment(CPPPATH=CPPATH)
-env.Append(LINKFLAGS=['-rdynamic'])
+
 
 env.Library('core', modules, LIBS=ALL_LIBS, LIBPATH='.', CXXFLAGS=COMMON_CXX_FLAGS, )
 

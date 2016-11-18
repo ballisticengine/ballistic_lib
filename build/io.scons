@@ -10,6 +10,6 @@ modules = [
 
 
 env = Environment(CPPPATH=CPPATH)
-env.Append(LINKFLAGS=['-rdynamic'])
 
-env.Library('io', modules, LIBS=ALL_LIBS, LIBPATH='.', CXXFLAGS=COMMON_CXX_FLAGS, )
+
+env.Library('io', modules, LIBS=ALL_LIBS+['core'],  LIBPATH='../bin', CXXFLAGS=COMMON_CXX_FLAGS, )

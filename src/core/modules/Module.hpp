@@ -17,9 +17,12 @@ namespace Ballistic {
                 virtual void setInitData(void *initData);
                 virtual void initialize() = 0;
                 virtual void destroy() = 0;
+                bool isInitialized;
+                bool isDestroyed;
                 friend class ModuleManager;
             public:
                 virtual void* getInitData();
+                Module();
             };
         }
     }

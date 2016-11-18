@@ -3,8 +3,6 @@
 *.a
 *.pyc
 *.so
-src/core/test
-src/core/bin/*
 .sconsign.dblite
 /bin/
 rundemo

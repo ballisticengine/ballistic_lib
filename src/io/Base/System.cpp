@@ -4,13 +4,12 @@ namespace Ballistic {
     namespace IO {
         namespace System {
 
-            System::System(IoDriver* ioDriver) {
-                this->ioDriver = ioDriver;
-                this->exit = false;
-            }
+            
 
             void System::initialize() {
+                this->ioDriver = (IoDriver *)this->getInitData();
                 this->ioDriver->initialize(0);
+                this->exit = false;
             }
 
             void System::destroy() {
@@ -22,14 +21,16 @@ namespace Ballistic {
                 IoEvent event;
                 while (!this->exit) {
                     rawEvent = this->ioDriver->poolEvent();
-                    this->ioDriver->transform(rawEvent, &event);
+                    if (rawEvent) {
+                        this->ioDriver->transform(rawEvent, &event);
+                    }
                 }
             }
 
             void System::shutdown() {
                 this->exit = true;
             }
-            
+
             IoDriver *System::getDriver() {
                 return this->ioDriver;
             }

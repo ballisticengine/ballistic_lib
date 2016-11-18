@@ -4,18 +4,19 @@
 #include "modules/Module.hpp"
 #include "IoDriver.hpp"
 #include "IoEvent.hpp"
+using namespace Ballistic::Core::Modules;
 
 namespace Ballistic {
     namespace IO {
         namespace System {
-            class System : public Ballistic::Core::Modules::Module {
+            class System : public Module {
             protected:
                 IoDriver *ioDriver;
                 bool exit;
-                virtual void initialize() = 0;
-                virtual void destroy() = 0;
+                virtual void initialize();
+                virtual void destroy();
             public:
-                System(IoDriver *ioDriver);
+                
                 virtual IoDriver *getDriver();
                 virtual void eventLoop();
                 virtual void shutdown();
