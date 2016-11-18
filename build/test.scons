@@ -1,0 +1,7 @@
+from site_scons import *
+test_modules = [
+        '../src/core/test/test.cpp'
+    ]
+env = Environment(CPPPATH=CPPATH)
+program = env.Program('./test', test_modules, LIBS=ALL_LIBS+TEST_LIBS+['core',], LIBPATH='../bin', CXXFLAGS=COMMON_CXX_FLAGS, )
+

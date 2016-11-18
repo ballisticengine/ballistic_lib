@@ -4,7 +4,7 @@
 *.pyc
 *.so
 src/core/test
-src/core/build/*
+src/core/bin/*
 .sconsign.dblite
-/build/
+/bin/
 rundemo

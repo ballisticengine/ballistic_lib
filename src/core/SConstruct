@@ -1,5 +1,0 @@
-from site_scons import *
-SConscript('core.scons', variant_dir='../../build', duplicate=0)
-
-if 'test' in COMMAND_LINE_TARGETS:
-    SConscript('test.scons')

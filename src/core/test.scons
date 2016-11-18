@@ -1,8 +1,0 @@
-from site_scons import *
-test_modules = [
-        './src/test/test.cpp'
-    ]
-env = Environment(CPPPATH=CPPATH)
-program = env.Program('./test', test_modules, LIBS=ALL_LIBS+TEST_LIBS+['core',], LIBPATH='../../build', CXXFLAGS=COMMON_CXX_FLAGS, )
-
-# env.AddPostAction(program, program[0].abspath)

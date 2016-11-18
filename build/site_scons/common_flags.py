@@ -12,6 +12,6 @@ CPPATH = [
     '/usr/include/bullet',
     './src/ui/librocket_interfaces',
     '/usr/local/include/Rocket',
-    './src',
+    '../src/core',
 ]
 

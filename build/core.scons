@@ -1,6 +1,6 @@
 from site_scons import *
 
-src = './src/'
+src = '../src/core/'
 
 
 modules = [
