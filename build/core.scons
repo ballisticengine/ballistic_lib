@@ -9,6 +9,7 @@ modules = [
     Glob(src + 'types/spatial/*.cpp'),
     Glob(src + 'modules/*.cpp'),
     Glob(src + 'pipeline/*.cpp'),
+    Glob(src + 'events/*.cpp'),
 ]
 env = Environment(CPPPATH=CPPATH)
 
