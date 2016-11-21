@@ -4,6 +4,7 @@
 #include <string>
 #include "../events/Listener.hpp"
 
+
 namespace Ballistic {
     namespace Core {
         namespace Modules {
@@ -16,15 +17,16 @@ namespace Ballistic {
             protected:
                 void *initData;
                 virtual void setInitData(void *initData);
-                virtual void initialize() = 0;
-                virtual void destroy() = 0;
+                virtual void initialize()=0;
+                virtual void destroy()=0;
                 bool initialized;
                 friend class ModuleManager;
             public:
                 virtual void* getInitData();
                 virtual bool isInitialized();
-                Module();
-            };
+                Module() : Ballistic::Core::Events::Listener() {};
+              
+            }; 
         }
     }
 }

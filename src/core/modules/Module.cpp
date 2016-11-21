@@ -17,9 +17,7 @@ namespace Ballistic {
                 return this->initialized;
             }
 
-            Module::Module() {
-                
-            }
+           
         }
     }
 }

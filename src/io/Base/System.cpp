@@ -7,7 +7,7 @@ namespace Ballistic {
             
 
             void System::initialize() {
-                this->ioDriver = (IoDriver *)this->getInitData();
+               
                 this->ioDriver->initialize(0);
                 this->exit = false;
             }
@@ -23,6 +23,7 @@ namespace Ballistic {
                     rawEvent = this->ioDriver->poolEvent();
                     if (rawEvent) {
                         this->ioDriver->transform(rawEvent, &event);
+                        this->dispatcher->dispatch(&event);
                     }
                 }
             }

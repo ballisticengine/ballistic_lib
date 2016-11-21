@@ -5,7 +5,7 @@ namespace Ballistic {
             using namespace Ballistic::IO::System;
             void SDLIoDriver::initialize(void *data) {
                 SDL_Init(SDL_INIT_EVERYTHING);
-                SDL_CreateWindowAndRenderer(800, 600, SDL_WINDOW_OPENGL, &window, &displayRenderer);
+                SDL_CreateWindowAndRenderer(800, 600, SDL_WINDOW_SHOWN, &window, &displayRenderer);
                 screen = SDL_GetWindowSurface(window);
             }
 

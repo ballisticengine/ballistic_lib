@@ -1,6 +1,10 @@
 #ifndef IOEVENT_HPP
 #define IOEVENT_HPP
 
+#include "events/Event.hpp"
+
+using namespace Ballistic::Core::Events;
+
 namespace Ballistic {
     namespace IO {
         namespace System {
@@ -26,8 +30,12 @@ namespace Ballistic {
                 char btn;
             };
 
-            struct IoEvent {
+            class IoEvent : public Event{
+            public:
+                IoEvent();
                 IoEventType type;
+                KeyData keyData;
+                MouseData mouseData;
             };
         }
     }

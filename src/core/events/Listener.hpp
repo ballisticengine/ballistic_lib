@@ -9,6 +9,8 @@ namespace Ballistic {
             class Listener {
             public:
                 virtual void processEvent(void *e);
+                Listener() {};
+                
             };
         }
     }
