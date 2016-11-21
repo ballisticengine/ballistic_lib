@@ -2,6 +2,9 @@
 #define RENDERINGPIPELINE_HPP
 
 #include "pipeline/Pipeline.hpp"
+#include "../renderers/RendererInterface.hpp"
+
+using Ballistic::Rendering::Renderers::RendererInterface;
 
 namespace Ballistic {
     namespace Rendering {
@@ -11,9 +14,11 @@ namespace Ballistic {
             protected:
                 virtual void initialize();
                 virtual void destroy();
+                RendererInterface *renderer;
                 
             public:
-                //virtual void addDefaultTasks();
+                RenderingPipeline(RendererInterface *renderer);
+                RendererInterface* getRenderer();
 
             };
         }

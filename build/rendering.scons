@@ -5,8 +5,8 @@ from site_scons import *
 src = '../src/rendering/'
 
 modules = [
-    Glob(src + 'pipeline/*.cpp'),
-    Glob(src + 'pipeline/Tasks/*.cpp'),
+    Glob(src + 'renderingPipeline/*.cpp'),
+    Glob(src + 'renderingPipeline/Tasks/*.cpp'),
     Glob(src + 'renderers/*.cpp'),
     Glob(src + 'renderers/GL/*.cpp'),
    

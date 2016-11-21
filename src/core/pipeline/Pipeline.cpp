@@ -10,22 +10,17 @@ namespace Ballistic {
 
             void Pipeline::runTask(const std::string taskName) {
                 Task * t = (Task *)this->tasks[taskName];
-                t->run();
+                t->run(this);
             }
 
             void Pipeline::runAll() {
-                for (auto i = this->tasks.begin(); i != this->tasks.end(); i++) {
-                    this->runTask(i->first);
-                }
+                this->run(this);
             }
 
             void Pipeline::removeTask(const std::string name) {
                 ////   
             }
 
-            std::string Pipeline::getName() {
-                return "pipeline";
-            }
             
             void Pipeline::initialize() {
 
@@ -33,6 +28,12 @@ namespace Ballistic {
 
             void Pipeline::destroy() {
 
+            }
+            
+            void Pipeline::run(Pipeline *p) {
+                for (auto i = this->tasks.begin(); i != this->tasks.end(); i++) {
+                    this->runTask(i->first);
+                }
             }
         }
     }

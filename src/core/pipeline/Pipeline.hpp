@@ -15,21 +15,18 @@ namespace Ballistic {
              TODO:
              * add task grouping
              */
-            /*
-             add events and broadcasting
-             * and module should be receiver, not pipeline
-             */
-            class Pipeline : public Ballistic::Core::Modules::Module {
+       
+            class Pipeline : public Ballistic::Core::Modules::Module, Task {
             protected:
                 std::map<const std::string, const Task *> tasks;
                 virtual void initialize();
                 virtual void destroy();
+                virtual void run(Pipeline *p);
             public:
                 void runAll();
                 void runTask(const std::string taskName);
                 void addTask(const std::string name, const Task *task);
                 void removeTask(const std::string name);
-                virtual std::string getName();
             };
 
         }

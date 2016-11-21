@@ -2,8 +2,9 @@
 #include <gtest/gtest.h>
 
 #include "VectorTest.cpp"
-#include "PipelineTest.cpp"
+#include "ModuleTest.cpp"
 #include "EventTest.cpp"
+#include "PipelineTest.cpp"
 
 int main(int argc, char **argv) {
     ::testing::InitGoogleTest(&argc, argv);
