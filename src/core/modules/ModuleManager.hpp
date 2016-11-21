@@ -5,6 +5,7 @@
 #include <map>
 
 #include "Module.hpp"
+#include "../events/Dispatcher.hpp"
 
 namespace Ballistic {
     namespace Core {
@@ -15,27 +16,22 @@ namespace Ballistic {
                 std::map<const std::string, void *> modules;
                 static ModuleManager *instance;
                 ModuleManager();
+                Ballistic::Core::Events::Dispatcher dispatcher;
             public:
                 static ModuleManager *get();
-
-                virtual void addModule(std::string name, void *m, void *initData = 0, long int ordering = -1) {
-                    Module *mod = (Module *) m;
-                    if (initData) {
-                        mod->setInitData(initData);
-                    }
-                    mod->isInitialized = false;
-                    mod->isDestroyed = false;
-                    this->modules.insert(std::pair<std::string, void *>(name, (void *) mod));
-
-                }
-
-                virtual void *getModule(const std::string name) {
-                    return this->modules[name];
-                }
-
+                virtual void addModule(std::string name, void *m, void *initData = 0, long int ordering = -1);
+                virtual void *getModule(const std::string name);
                 virtual void initialize(const std::string name);
                 virtual void destroy(const std::string name);
-                virtual void initialize();
+                virtual Ballistic::Core::Events::Dispatcher * getDispatcher();
+                virtual void initialize(); //there is still error here
+                /*
+                 TODO: destroy should also unallocate memory for the module
+                 * there should be a separate uninit function
+                 * OR maybe not, sice module is created by user and it might be a 
+                 * compile time allocated
+                 */
+                
                 virtual void destroy();
             };
 
