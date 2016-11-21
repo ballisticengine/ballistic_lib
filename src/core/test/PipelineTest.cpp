@@ -12,7 +12,7 @@ using namespace Ballistic::Core::Pipeline;
 
 class TestTask : public Task {
 protected:
-    void run(Pipeline *pipeline) {
+    void run(void *pipeline) {
         
     }
 };

@@ -18,6 +18,7 @@ namespace Ballistic {
                 
             public:
                 RenderingPipeline(RendererInterface *renderer);
+                void addDefaultTasks();
                 RendererInterface* getRenderer();
 
             };

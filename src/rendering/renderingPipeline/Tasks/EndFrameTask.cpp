@@ -1,16 +1,13 @@
-#include "BeginFrameTask.hpp"
+#include "EndFrameTask.hpp"
 #include "../RenderingPipeline.hpp"
 
 namespace Ballistic {
     namespace Rendering {
         namespace Pipeline {
 
-             void BeginFrameTask::run(RenderingPipeline *p) {
-                 p->getRenderer()->start();
+            void EndFrameTask::run(RenderingPipeline *p) {
+                p->getRenderer()->end();
             }
         }
     }
 }
-
-
-

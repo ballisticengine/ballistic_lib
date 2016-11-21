@@ -28,9 +28,11 @@ namespace Ballistic {
                         this->ioDriver->transform(rawEvent, &event);
                         this->dispatcher->dispatch(&event);
                     }
+                    this->dispatcher->dispatch(&tickEvent);
+                    this->ioDriver->flush();
                 }
                 
-                this->dispatcher->dispatch(&tickEvent);
+                
             }
 
             void System::shutdown() {

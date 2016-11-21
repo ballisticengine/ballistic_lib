@@ -9,6 +9,8 @@ namespace Ballistic {
                 virtual void initialize()=0;
                 virtual void destroy()=0;
                 virtual void resize(int w, int h)=0;
+                virtual void start()=0;
+                virtual void end()=0;
             };
         }
     }

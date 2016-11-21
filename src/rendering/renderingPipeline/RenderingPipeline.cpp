@@ -1,4 +1,6 @@
 #include "RenderingPipeline.hpp"
+#include "Tasks/BeginFrameTask.hpp"
+#include "Tasks/EndFrameTask.hpp"
 
 namespace Ballistic {
     namespace Rendering {
@@ -18,6 +20,11 @@ namespace Ballistic {
 
             RendererInterface* RenderingPipeline::getRenderer() {
                 return this->renderer;
+            }
+            
+            void RenderingPipeline::addDefaultTasks() {
+                this->addTask("begin", new BeginFrameTask());
+                this->addTask("end", new EndFrameTask());
             }
 
 

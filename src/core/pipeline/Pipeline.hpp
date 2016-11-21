@@ -21,7 +21,7 @@ namespace Ballistic {
                 std::map<const std::string, const Task *> tasks;
                 virtual void initialize();
                 virtual void destroy();
-                virtual void run(Pipeline *p);
+                virtual void run(void *p);
             public:
                 void runAll();
                 void runTask(const std::string taskName);

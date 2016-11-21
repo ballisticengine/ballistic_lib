@@ -16,6 +16,7 @@ namespace Ballistic {
                 virtual void destroy();
                 virtual void transform(void *rawEvent, Ballistic::IO::System::IoEvent *event);
                 virtual void *poolEvent();
+                virtual void flush();
                 SDL_Surface *screen;
                 SDL_Renderer* displayRenderer;
                 SDL_Window *window;

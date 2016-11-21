@@ -42,6 +42,10 @@ namespace Ballistic {
             void SDLIoDriver::destroy() {
 
             }
+            
+            void SDLIoDriver::flush() {
+                SDL_GL_SwapWindow(window);
+            }
         }
     }
 }

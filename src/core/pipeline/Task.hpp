@@ -7,10 +7,10 @@ namespace Ballistic {
             class Pipeline;
             class Task {
             protected:
-                virtual void run(Pipeline *p) = 0;
+                virtual void run(void *p=0) = 0;
                 friend class Pipeline;
             public:
-                
+                Task() {}
             };
         }
     }

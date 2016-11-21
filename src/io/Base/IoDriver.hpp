@@ -15,6 +15,7 @@ namespace Ballistic {
                 virtual void *poolEvent()=0;
                 virtual void initialize(void *params) = 0;
                 virtual void destroy() = 0;   
+                virtual void flush() = 0;
                 friend class System;
             public:
                 virtual void setWindowTitle(std::string) {};

@@ -9,6 +9,7 @@ modules = [
     Glob(src + 'renderingPipeline/Tasks/*.cpp'),
     Glob(src + 'renderers/*.cpp'),
     Glob(src + 'renderers/GL/*.cpp'),
+    Glob(src + 'renderers/Dummy/*.cpp'),
    
 ]
 

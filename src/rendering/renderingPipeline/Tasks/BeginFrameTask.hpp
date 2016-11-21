@@ -1,13 +1,25 @@
 #ifndef BEGINFRAMETASK_HPP
 #define BEGINFRAMETASK_HPP
 
-#include "pipeline/Task.hpp"
+#include "../RenderingTask.hpp"
+#include "../RenderingPipeline.hpp"
+#include "../../renderers/RendererInterface.hpp"
+
+namespace Ballistic {
+    namespace Rendering {
+        namespace Pipeline {
+
+            class BeginFrameTask : public RenderingTask {
+            protected:
+               virtual void run(RenderingPipeline *renderer);
+            public:
+                
+            };
+        }
+    }
+}
 
 
-class BeginFrameTask : public Ballistic::Core::Pipeline::Task {
-protected:
-    virtual void run(Ballistic::Core::Pipeline::Pipeline *p);
-};
 
 #endif 
 

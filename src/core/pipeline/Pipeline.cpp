@@ -30,7 +30,7 @@ namespace Ballistic {
 
             }
             
-            void Pipeline::run(Pipeline *p) {
+            void Pipeline::run(void *p) {
                 for (auto i = this->tasks.begin(); i != this->tasks.end(); i++) {
                     this->runTask(i->first);
                 }
