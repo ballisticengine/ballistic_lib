@@ -14,7 +14,7 @@ namespace Ballistic {
             protected:
                 virtual void initialize(void *data);
                 virtual void destroy();
-                virtual void transform(void *rawEvent, Ballistic::IO::System::IoEvent *event);
+                virtual void transform(void *rawEvent, Ballistic::IO::System::IoEvent *event); //TODO: make ioevent and union
                 virtual void *poolEvent();
                 virtual void flush();
                 SDL_Surface *screen;
