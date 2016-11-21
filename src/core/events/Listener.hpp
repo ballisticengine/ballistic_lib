@@ -8,6 +8,7 @@ namespace Ballistic {
         namespace Events {
             class Listener {
             public:
+                //TODO: callback map here and dispatcher with callback name method
                 virtual void processEvent(void *e);
                 Listener() {};
                 

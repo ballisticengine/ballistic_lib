@@ -1,6 +1,7 @@
 #ifndef IODRIVER_HPP
 #define IODRIVER_HPP
 
+#include <string>
 #include "IoEvent.hpp"
 
 namespace Ballistic {
@@ -16,7 +17,12 @@ namespace Ballistic {
                 virtual void destroy() = 0;   
                 friend class System;
             public:
-                
+                virtual void setWindowTitle(std::string) {};
+                virtual void setResolution(size_t width, size_t height){};
+                virtual void setFullscreen(bool fullscreen) {};
+                virtual std::string getWindowTitle() {return "";};
+                virtual size_t* getResolution() {return 0;};
+                virtual bool getFullscreen() {return false;};
             };
         }
     }

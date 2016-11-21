@@ -1,0 +1,13 @@
+from site_scons import *
+COREPATH = '../core'
+IOPATH = '../io'
+RENDERINGPATH = '../rendering'
+
+env = Environment(CPPPATH=CPPATH+['../src/demos', COREPATH, IOPATH, RENDERINGPATH, ])
+
+modules = [
+    Glob('../src/demos/renderingPipeline/*.cpp'),
+]
+
+env.Program('./renderingpipeline', modules, LIBS=['core','io','rendering']+SDL_LIBS
+    ,LIBPATH='../bin', CXXFLAGS=COMMON_CXX_FLAGS, )

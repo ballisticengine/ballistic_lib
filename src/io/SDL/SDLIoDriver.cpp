@@ -5,7 +5,7 @@ namespace Ballistic {
             using namespace Ballistic::IO::System;
             void SDLIoDriver::initialize(void *data) {
                 SDL_Init(SDL_INIT_EVERYTHING);
-                SDL_CreateWindowAndRenderer(800, 600, SDL_WINDOW_SHOWN, &window, &displayRenderer);
+                SDL_CreateWindowAndRenderer(800, 600, SDL_WINDOW_OPENGL, &window, &displayRenderer);
                 screen = SDL_GetWindowSurface(window);
             }
 
@@ -25,6 +25,17 @@ namespace Ballistic {
                     case SDL_QUIT:
                         event->type = IoEventType::IOEVENT_EXIT;
                         break;
+                    case SDL_KEYDOWN:
+                        event->type = IoEventType::IOEVENT_KEYDOWN;
+                        event->keyData.keycode = sdlEvent->key.keysym.sym;
+                        event->keyData.scancode = sdlEvent->key.keysym.scancode;
+                        break;
+                    case SDL_KEYUP:
+                        event->type = IoEventType::IOEVENT_KEYUP;
+                        event->keyData.keycode = sdlEvent->key.keysym.sym;
+                        event->keyData.scancode = sdlEvent->key.keysym.scancode;
+                        break;
+                    
                 }
             }
 

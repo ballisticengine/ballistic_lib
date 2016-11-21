@@ -29,11 +29,15 @@ public:
     virtual void processEvent(void *e) {
         IoEvent *ioe = (IoEvent *)e;
         
-       
-        if(ioe->type==IoEventType::IOEVENT_EXIT) {
-            
-            this->system->shutdown();
+        switch(ioe->type) {
+            case IoEventType::IOEVENT_EXIT:
+                this->system->shutdown();
+                break;
+            case IoEventType::IOEVENT_KEYUP:
+                cout << "Key pressed" << ioe->keyData.keycode << endl;
+                break;
         }
+       
     }
     
     

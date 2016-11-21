@@ -1,0 +1,20 @@
+from site_scons import *
+
+
+
+src = '../src/rendering/'
+
+modules = [
+    Glob(src + 'pipeline/*.cpp'),
+    Glob(src + 'pipeline/Tasks/*.cpp'),
+    Glob(src + 'renderers/*.cpp'),
+    Glob(src + 'renderers/GL/*.cpp'),
+   
+]
+
+
+env = Environment(CPPPATH=CPPATH)
+
+
+env.Library('rendering', modules, LIBS=ALL_LIBS+['core'],  LIBPATH='../bin', CXXFLAGS=COMMON_CXX_FLAGS, )
+
