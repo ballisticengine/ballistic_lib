@@ -8,6 +8,7 @@ namespace Ballistic {
         namespace Types {
             namespace Graphics {
 
+                
                 struct UV {
                     scalar_t u, v;
                 };

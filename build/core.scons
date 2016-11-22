@@ -10,6 +10,7 @@ modules = [
     Glob(src + 'modules/*.cpp'),
     Glob(src + 'pipeline/*.cpp'),
     Glob(src + 'events/*.cpp'),
+    Glob(src + 'MeshBuilder/*.cpp'),
 ]
 env = Environment(CPPPATH=CPPATH)
 
