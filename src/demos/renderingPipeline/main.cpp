@@ -36,9 +36,6 @@ int main() {
     rpl.addTask("begin", &bft);
     rpl.addTask("frame", &ft);
     rpl.addTask("end", &eft);
-    
-    
-//    rpl.addDefaultTasks();
 
 
     mgr->addModule("system", system);
@@ -73,18 +70,14 @@ int main() {
     t.indices[2] = 2;
     
     
-
     Mesh m;
     m.vertices = vertices;
     m.n_triangles = 1;
     m.n_vertices = 3;
     m.triangles=&t;
     
-
     mgr->initialize("system");
     mgr->initialize("rendering");
-
-
 
     vboMgr.addVbo("test", rdr.makeMeshVbo(m));
     system->eventLoop();
