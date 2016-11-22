@@ -8,7 +8,7 @@
 namespace Ballistic {
     namespace Rendering {
         namespace Pipeline {
-            class RenderMeshesTask : public RenderingTask {
+            class RenderSceneTask : public RenderingTask {
             protected:
                 virtual void run(RenderingPipeline *p);
             };

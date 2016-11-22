@@ -1,9 +1,9 @@
-#include "RenderMeshesTask.hpp"
+#include "RenderSceneTask.hpp"
 
 namespace Ballistic {
     namespace Rendering {
         namespace Pipeline {
-            void RenderMeshesTask::run(RenderingPipeline *p){}
+            void RenderSceneTask::run(RenderingPipeline *p){}
         }
     }
 }
