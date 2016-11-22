@@ -1,6 +1,10 @@
 #include "types/common.hpp"
 #include "GLRenderer.hpp"
 #include "GLVbo.hpp"
+#include <iostream>
+
+using namespace std;
+#define BUFFER_OFFSET(i) ((void*)(i))
 
 //http://stackoverflow.com/questions/15548776/rendering-engine-design-abstracting-away-api-specific-code-for-resources
 // http://www.songho.ca/opengl/gl_vbo.html
@@ -9,27 +13,28 @@ namespace Ballistic {
         namespace Renderers {
 
             void GLRenderer::initialize() {
-                glewInit();
                 this->resize(800, 600);
+                glewInit();
 
-//                glCullFace(GL_FRONT);
-//                glFrontFace(GL_CW);
-//                glEnable(GL_CULL_FACE);
-//                glEnable(GL_DEPTH_TEST);
-//                glEnable(GL_TEXTURE_2D);
-//                glEnable(GL_NORMALIZE);
-//                glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+                glCullFace(GL_FRONT);
+                glDisable(GL_LIGHTING);
+                glFrontFace(GL_CCW);
+                glEnable(GL_CULL_FACE);
+                glEnable(GL_DEPTH_TEST);
+                glDisable(GL_TEXTURE_2D);
+                glEnable(GL_NORMALIZE);
+                glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 
                 glShadeModel(GL_SMOOTH);
-//                glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-//                glEnable(GL_BLEND);
+                glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+                glEnable(GL_BLEND);
                 glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
 
                 glMatrixMode(GL_PROJECTION);
                 glLoadIdentity();
 
-                glFrustum(-2, 2, -2, 2, 2, 5000);
-//                 glFrustum (-1.0, 1.0, -1.0, 1.0, 1.5, 200.0);
+                glFrustum(-2, 2, -2, 2, 2, 200);
+
             }
 
             void GLRenderer::destroy() {
@@ -41,83 +46,88 @@ namespace Ballistic {
             }
 
             void GLRenderer::start() {
-                
+
                 glClearColor(0, 0, 0, 1);
-                glClear(GL_COLOR_BUFFER_BIT);
+                glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
                 glMatrixMode(GL_MODELVIEW);
                 glLoadIdentity();
-                glTranslatef(0,0,-7);
-                glColor3f(1,0,0);
+                glTranslatef(0, 0, -3);
+
+                glPointSize(2);
+
+                glColor4f(1, 0, 0, 1);
             }
 
             void GLRenderer::end() {
+
                 glFlush();
+
             }
 
             void *GLRenderer::makeMeshVbo(const Mesh &m) {
 
-                 glEnableClientState(GL_VERTEX_ARRAY);
-                using Ballistic::Core::Types::scalar_t;
-                GLdouble **tmpVerts = new GLdouble*[m.n_vertices];
-                GLuint *tmpInds = new GLuint[m.n_triangles*3];
+                GLfloat *tmpVerts = new GLfloat[m.n_vertices * 3];
+                GLushort *tmpInds = new GLushort[m.n_triangles * 3];
 
+                size_t vn = 0;
                 for (size_t i = 0; i < m.n_vertices; i++) {
-                    tmpVerts[i] = new GLdouble[3];
+                    tmpVerts[vn] = m.vertices[i].x;
+                    vn++;
+                    tmpVerts[vn] = m.vertices[i].y;
+                    vn++;
+                    tmpVerts[vn] = m.vertices[i].z;
+                    vn++;
 
-                    tmpVerts[i][0] = m.vertices[i].x;
-                    tmpVerts[i][1] = m.vertices[i].y;
-                    tmpVerts[i][2] = m.vertices[i].z;
                 }
-                
-                size_t n =0;
-                for(size_t i=0; i<m.n_triangles; i++) {
-                    for(size_t x=0; x<3; x++) {
+
+                size_t n = 0;
+                for (size_t i = 0; i < m.n_triangles; i++) {
+                    for (size_t x = 0; x < 3; x++) {
                         tmpInds[n] = m.triangles[i].indices[x];
                         n++;
                     }
-                    
+
                 }
-                
-                glewInit();
 
                 GLVbo *vbo = new GLVbo();
                 vbo->vId;
-                
+
                 glGenBuffers(1, &vbo->vId);
-                
+
                 glBindBuffer(GL_ARRAY_BUFFER, vbo->vId);
 
-                glBufferData(GL_ARRAY_BUFFER, m.n_vertices * sizeof (GLdouble)*3, tmpVerts, GL_STATIC_DRAW);
+                glBufferData(GL_ARRAY_BUFFER, m.n_vertices * sizeof (GLfloat)*3, tmpVerts, GL_STATIC_DRAW);
 
-                 glGenBuffers(1, &vbo->eId);
-                 
+                glGenBuffers(1, &vbo->eId);
+
                 glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vbo->eId);
 
-                glBufferData(GL_ELEMENT_ARRAY_BUFFER_ARB, m.n_triangles * sizeof (unsigned int)*3, tmpInds, GL_STATIC_DRAW);
+                glBufferData(GL_ELEMENT_ARRAY_BUFFER, m.n_triangles * sizeof (GLushort)*3, tmpInds, GL_STATIC_DRAW);
 
-                 glDisableClientState(GL_VERTEX_ARRAY); 
                 return vbo;
 
             }
 
             void GLRenderer::renderVbo(void* vbo) {
+
                 GLVbo *glVbo = (GLVbo *) vbo;
 
-              
 
-                glBindBuffer(GL_ARRAY_BUFFER, glVbo->vId); 
-                
-                  
-                glEnableClientState(GL_VERTEX_ARRAY);
-                glVertexPointer(3, GL_DOUBLE, sizeof(GLdouble), 0);  
-                
+
+                glBindBuffer(GL_ARRAY_BUFFER, glVbo->vId);
                 glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, glVbo->eId);
-                glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, 0);
-                
-                glDisableClientState(GL_VERTEX_ARRAY); 
-                
-                glBindBufferARB(GL_ARRAY_BUFFER, 0);
-                glBindBufferARB(GL_ELEMENT_ARRAY_BUFFER, 0);
+
+                glEnableClientState(GL_VERTEX_ARRAY);
+
+                glVertexPointer(3, GL_FLOAT, 0, (char *) 0);
+
+                glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_SHORT, 0);
+                //                glDrawArrays(GL_POINTS, 0, 3);
+
+                glDisableClientState(GL_VERTEX_ARRAY);
+
+                glBindBuffer(GL_ARRAY_BUFFER, 0);
+                glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
             }
         }
     }

@@ -54,13 +54,13 @@ int main() {
 
 
     Vector3d vertices[3];
-    vertices[0].x = -1;
-    vertices[0].y = 0;
+    vertices[0].x = 0;
+    vertices[0].y = -1;
     vertices[0].z = 0;
 
 
-    vertices[1].x = 1;
-    vertices[1].y = 0;
+    vertices[1].x = 0;
+    vertices[1].y = 1;
     vertices[1].z = 0;
 
     vertices[2].x = 1;
@@ -81,7 +81,8 @@ int main() {
     m.triangles=&t;
     
 
-    mgr->initialize();
+    mgr->initialize("system");
+    mgr->initialize("rendering");
 
 
 
