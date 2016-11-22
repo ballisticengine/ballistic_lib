@@ -42,9 +42,7 @@ namespace Ballistic {
                     Vector3d operator*(const Vector3d &b);
                     Vector3d operator*(const scalar_t a);
 
-                    //                scalar_t operator!();
-                    //                Vector3d operator|(scalar_t length);
-                    //                scalar_t operator%(const Vector3d &b);
+                    
 
                     virtual std::ostream & operator<<(std::ostream & ostr);
                 };

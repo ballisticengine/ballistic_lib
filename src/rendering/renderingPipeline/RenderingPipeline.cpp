@@ -22,10 +22,6 @@ namespace Ballistic {
                 return this->renderer;
             }
             
-            void RenderingPipeline::addDefaultTasks() {
-                this->addTask("begin", new BeginFrameTask());
-                this->addTask("end", new EndFrameTask());
-            }
 
 
         }

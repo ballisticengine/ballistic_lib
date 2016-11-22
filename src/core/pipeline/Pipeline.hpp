@@ -23,10 +23,10 @@ namespace Ballistic {
                 virtual void destroy();
                 virtual void run(void *p);
             public:
-                void runAll();
-                void runTask(const std::string taskName);
-                void addTask(const std::string name, const Task *task);
-                void removeTask(const std::string name);
+                virtual void runAll();
+                virtual void runTask(const std::string taskName);
+                virtual void addTask(const std::string name, const Task *task);
+                virtual void removeTask(const std::string name);
             };
 
         }

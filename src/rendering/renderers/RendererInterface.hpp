@@ -14,7 +14,8 @@ namespace Ballistic {
                 virtual void resize(int w, int h)=0;
                 virtual void start()=0;
                 virtual void end()=0;
-                //virtual unsigned int makeMeshVbo()=0;
+                virtual void* makeMeshVbo(const Mesh &m)=0;
+                virtual void renderVbo(void* vbo)=0;
                 
             };
         }
