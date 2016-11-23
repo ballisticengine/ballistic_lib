@@ -10,8 +10,12 @@ namespace Ballistic {
             
             
             protected:
+                size_t vertexPerPoly, vertexCounter;
             public:
-                void addVertex(Vector3d &coords);
+                virtual void startPolygon();
+                virtual void addVertex(Vector3d &coords);
+                virtual void addNormal(Vector3d &normal);
+                virtual void endPolygon();
             };
         }
     }

@@ -1,0 +1,7 @@
+core.scons
+test.scons
+io.scons
+rendering.scons
+demo.sdlandpipeline.scons
+demo.sdlsystem.scons
+demo.renderingpipeline.scons
