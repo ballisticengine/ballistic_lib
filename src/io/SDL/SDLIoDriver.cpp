@@ -14,10 +14,7 @@ namespace Ballistic {
             }
             
             bool SDLIoDriver::pollEvent(void *event) {
-                if (SDL_PollEvent((SDL_Event *)event)) {
-                    return true;
-                }
-                return false;
+                return SDL_PollEvent((SDL_Event *)event);
             }
             
             void SDLIoDriver::transform(void *rawEvent, Ballistic::IO::System::IoEvent *event) {
