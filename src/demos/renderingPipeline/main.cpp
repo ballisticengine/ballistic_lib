@@ -7,7 +7,9 @@
 #include "../../rendering/renderers/GL/GLRenderer.hpp"
 #include "../../rendering/renderingPipeline/Tasks/BeginFrameTask.hpp"
 #include "../../rendering/renderingPipeline/Tasks/EndFrameTask.hpp"
-
+#include "types/graphics/materials/Material.hpp"
+#include "types/graphics/materials/SimpleColorMaterial.hpp"
+#include "types/graphics/Color.hpp"
 #include "EventListener.hpp"
 #include "TickListener.hpp"
 #include "../../rendering/VBO/VboManager.hpp"
@@ -21,6 +23,8 @@ using Ballistic::Core::Types::Graphics::Triangle;
 using Ballistic::Core::Types::Spatial::Vector3d;
 using Ballistic::Rendering::Vbo::VboManager;
 using Ballistic::Core::MeshBuilder::TriMeshBuilder;
+using Ballistic::Core::Types::Graphics::Materials::SimpleColorMaterial;
+using Ballistic::Core::Types::Graphics::Color;
 
 int main() {
     ModuleManager *mgr = ModuleManager::get();
@@ -57,14 +61,18 @@ int main() {
     mb.addPolyVertex(Vector3d(0, -1, 0));
     mb.addPolyVertex(Vector3d(0, 1, 0));
     mb.addPolyVertex(Vector3d(1, 1, 0));
+    mb.addPolyNormal(Vector3d(0, 0, 0));
+    mb.addPolyNormal(Vector3d(0, 0, 0));
+    mb.addPolyNormal(Vector3d(0, 0, 0));
     mb.endPolygon();
 
     Mesh *m = (Mesh *) mb.build();
-
+    SimpleColorMaterial mtl(Color(0,1,0,1));
+    
     mgr->initialize("system");
     mgr->initialize("rendering");
 
-    vboMgr.addVbo("test", rdr.makeMeshVbo(*m));
+    vboMgr.addVbo("test", rdr.makeVbo(*m, mtl));
     system->eventLoop();
     mgr->destroy();
 

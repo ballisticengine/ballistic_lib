@@ -1,10 +1,14 @@
 #include "types/common.hpp"
+#include "types/graphics/materials/SimpleColorMaterial.hpp"
+#include "types/graphics/Color.hpp"
 #include "GLRenderer.hpp"
 #include "GLVbo.hpp"
 #include <iostream>
+#include "glsl/shaders.hpp"
 
 using namespace std;
 #define BUFFER_OFFSET(i) ((void*)(i))
+
 
 //http://stackoverflow.com/questions/15548776/rendering-engine-design-abstracting-away-api-specific-code-for-resources
 // http://www.songho.ca/opengl/gl_vbo.html
@@ -64,52 +68,95 @@ namespace Ballistic {
 
             }
 
-            Vbo *GLRenderer::makeMeshVbo(const Mesh &m) {
+            Vbo *GLRenderer::makeVbo(const Mesh &m, Material &mtl) {
 
                 GLfloat *tmpVerts = new GLfloat[m.n_vertices * 3];
+                GLfloat *tmpNorms = new GLfloat[m.n_vertices * 3];
+                
                 GLushort *tmpInds = new GLushort[m.n_triangles * 3];
 
                 size_t vn = 0;
                 for (size_t i = 0; i < m.n_vertices; i++) {
+                    tmpNorms[vn] = m.normals[i].x;
                     tmpVerts[vn] = m.vertices[i].x;
                     vn++;
+                    tmpNorms[vn] = m.normals[i].y;
                     tmpVerts[vn] = m.vertices[i].y;
                     vn++;
+                    tmpNorms[vn] = m.normals[i].z;
                     tmpVerts[vn] = m.vertices[i].z;
                     vn++;
 
                 }
 
+
                 size_t n = 0;
+                size_t nn = 0;
                 for (size_t i = 0; i < m.n_triangles; i++) {
                     for (size_t x = 0; x < 3; x++) {
                         tmpInds[n] = m.triangles[i].indices[x];
+
                         n++;
                     }
 
+
                 }
 
-                 GLVbo *vboData = new GLVbo();
-                Vbo *vbo= new Vbo(&m, vboData);
-                
-               
+                GLVbo *vboData = new GLVbo();
+                Vbo *vbo = new Vbo(&m, 0, vboData);
+
+
                 vboData->vId;
 
+                //glGenVertexArrays(1, &vboData->vaoId);
+            
+                
                 glGenBuffers(1, &vboData->vId);
 
                 glBindBuffer(GL_ARRAY_BUFFER, vboData->vId);
 
-                glBufferData(GL_ARRAY_BUFFER, m.n_vertices * sizeof (GLfloat)*3, tmpVerts, GL_STATIC_DRAW);
+                GLuint vSize = m.n_vertices * sizeof (GLfloat)*3;
+                glBufferData(GL_ARRAY_BUFFER, vSize, tmpVerts, GL_STATIC_DRAW);
 
                 glGenBuffers(1, &vboData->eId);
 
                 glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vboData->eId);
 
+
+
                 glBufferData(GL_ELEMENT_ARRAY_BUFFER, m.n_triangles * sizeof (GLushort)*3, tmpInds, GL_STATIC_DRAW);
+                glBufferSubData(GL_ARRAY_BUFFER,
+                        vSize,
+                        vSize,
+                        tmpNorms);
+
+                vboData->nOffset = vSize;
                 
+                using Ballistic::Core::Types::Graphics::Color;
+                using Ballistic::Core::Types::Graphics::Materials::SimpleColorMaterial;
+                
+                
+                
+                if (mtl.getType() == "SimpleColor") {
+                    SimpleColorMaterial *scm = (SimpleColorMaterial *) mtl.getMaterialData();
+                    
+//                glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, NULL);
+//                glBufferSubData(GL_ARRAY_BUFFER,
+//                        vSize,
+//                        vSize,
+//                        tmpNorms);
+                    
+                    
+                    //https://www.opengl.org/discussion_boards/showthread.php/183319-add-color-to-VBOs-best-practices
+
+                }
+
+                
+
                 delete tmpInds;
                 delete tmpVerts;
-                
+                delete tmpNorms;
+
                 return vbo;
 
             }
@@ -119,23 +166,27 @@ namespace Ballistic {
                 GLVbo *glVbo = (GLVbo *) vbo->rendererData;
                 const Mesh *m = vbo->mesh;
 
-
-
                 glBindBuffer(GL_ARRAY_BUFFER, glVbo->vId);
                 glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, glVbo->eId);
 
                 glEnableClientState(GL_VERTEX_ARRAY);
+                glEnableClientState(GL_NORMAL_ARRAY);
 
                 glVertexPointer(3, GL_FLOAT, 0, (char *) 0);
 
-                glDrawElements(GL_TRIANGLES, m->n_triangles*3, GL_UNSIGNED_SHORT, 0);
-                //                glDrawArrays(GL_POINTS, 0, 3);
+                glNormalPointer(GL_FLOAT, 0, BUFFER_OFFSET(glVbo->nOffset));
+                glDrawElements(GL_TRIANGLES, m->n_triangles * 3, GL_UNSIGNED_SHORT, 0);
+
 
                 glDisableClientState(GL_VERTEX_ARRAY);
+                glEnableClientState(GL_NORMAL_ARRAY);
 
                 glBindBuffer(GL_ARRAY_BUFFER, 0);
                 glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
             }
+            
+            
+
         }
     }
 }

@@ -11,13 +11,15 @@ namespace Ballistic {
     namespace Rendering {
         namespace Renderers {
             class GLRenderer : public RendererInterface {
+            protected:
+                
             public:
                 virtual void initialize();
                 virtual void destroy();
                 virtual void resize(int w, int h);
                 virtual void start();
                 virtual void end();
-                virtual Vbo * makeMeshVbo(const Mesh &m);
+                virtual Vbo * makeVbo(const Mesh &m,  Material &mtl);
                 virtual void renderVbo(Vbo * vbo);
           
             };

@@ -21,7 +21,7 @@ namespace Ballistic {
                     Ballistic::Core::Types::Spatial::Vector3d *normals;
                     Ballistic::Core::Types::Spatial::Vector3d *vertices;
                     Triangle *triangles;
-                    size_t n_vertices, n_triangles;
+                    size_t n_vertices, n_triangles, n_normals;
                 };
             }
         }

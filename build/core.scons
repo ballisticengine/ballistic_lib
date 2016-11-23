@@ -6,6 +6,7 @@ src = '../src/core/'
 modules = [
     Glob(src + 'types/*.cpp'),
     Glob(src + 'types/graphics/*.cpp'),
+    Glob(src + 'types/graphics/materials/*.cpp'),
     Glob(src + 'types/spatial/*.cpp'),
     Glob(src + 'modules/*.cpp'),
     Glob(src + 'pipeline/*.cpp'),

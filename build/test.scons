@@ -3,5 +3,5 @@ test_modules = [
         '../src/core/test/test.cpp'
     ]
 env = Environment(CPPPATH=CPPATH)
-program = env.Program('./test', test_modules, LIBS=ALL_LIBS+['core',]+TEST_LIBS, LIBPATH='../bin', CXXFLAGS=COMMON_CXX_FLAGS, )
+program = env.Program('./test', test_modules, LIBS=ALL_LIBS+['core','scene']+TEST_LIBS, LIBPATH='../bin', CXXFLAGS=COMMON_CXX_FLAGS, )
 

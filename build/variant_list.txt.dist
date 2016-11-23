@@ -1,5 +1,6 @@
 core.scons
 test.scons
+scene.scons
 io.scons
 rendering.scons
 demo.sdlandpipeline.scons

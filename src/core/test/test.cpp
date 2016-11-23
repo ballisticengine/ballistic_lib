@@ -6,6 +6,7 @@
 #include "EventTest.cpp"
 #include "PipelineTest.cpp"
 #include "MeshBuilderTest.cpp"
+#include "SceneTest.cpp"
 
 int main(int argc, char **argv) {
     ::testing::InitGoogleTest(&argc, argv);
