@@ -12,7 +12,7 @@ namespace Ballistic {
         namespace Renderers {
             class GLRenderer : public RendererInterface {
             protected:
-                
+                void setUpShaders();
             public:
                 virtual void initialize();
                 virtual void destroy();

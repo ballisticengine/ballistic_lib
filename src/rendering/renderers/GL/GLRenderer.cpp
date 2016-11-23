@@ -38,10 +38,52 @@ namespace Ballistic {
                 glLoadIdentity();
 
                 glFrustum(-2, 2, -2, 2, 2, 200);
+                
+                setUpShaders();
 
             }
 
             void GLRenderer::destroy() {
+
+            }
+
+            void GLRenderer::setUpShaders() {
+                GLhandleARB
+                vhandle = glCreateShaderObjectARB(GL_VERTEX_SHADER_ARB),
+                        fhandle = glCreateShaderObjectARB(GL_FRAGMENT_SHADER_ARB);
+
+                const char
+                *vtext = GLSL_GENERIC_VERT,
+                        *ftext = GLSL_GENERIC_FRAG;
+                glShaderSourceARB(vhandle, 1, &vtext, 0);
+                glShaderSourceARB(fhandle, 1, &ftext, 0);
+
+//                delete vtext;
+//                delete ftext;
+
+                glCompileShaderARB(vhandle);
+                glCompileShaderARB(fhandle);
+                GLhandleARB p;
+                p = glCreateProgramObjectARB();
+                glAttachObjectARB(p, vhandle);
+                glAttachObjectARB(p, fhandle);
+                glLinkProgramARB(p);
+
+                GLint vcompiled, fcompiled, linked;
+
+                glGetProgramiv(p, GL_LINK_STATUS, &linked);
+
+
+                glGetProgramiv(p, GL_LINK_STATUS, &linked);
+
+                glGetObjectParameterivARB(vhandle, GL_COMPILE_STATUS, &vcompiled);
+                glGetObjectParameterivARB(vhandle, GL_COMPILE_STATUS, &fcompiled);
+
+              
+                       cout << "Status:" << vcompiled << ", " << fcompiled <<
+                               ", " << linked << endl;
+                   
+                glUseProgram(p);
 
             }
 
@@ -72,7 +114,7 @@ namespace Ballistic {
 
                 GLfloat *tmpVerts = new GLfloat[m.n_vertices * 3];
                 GLfloat *tmpNorms = new GLfloat[m.n_vertices * 3];
-                
+
                 GLushort *tmpInds = new GLushort[m.n_triangles * 3];
 
                 size_t vn = 0;
@@ -109,8 +151,8 @@ namespace Ballistic {
                 vboData->vId;
 
                 //glGenVertexArrays(1, &vboData->vaoId);
-            
-                
+
+
                 glGenBuffers(1, &vboData->vId);
 
                 glBindBuffer(GL_ARRAY_BUFFER, vboData->vId);
@@ -131,27 +173,27 @@ namespace Ballistic {
                         tmpNorms);
 
                 vboData->nOffset = vSize;
-                
+
                 using Ballistic::Core::Types::Graphics::Color;
                 using Ballistic::Core::Types::Graphics::Materials::SimpleColorMaterial;
-                
-                
-                
+
+
+
                 if (mtl.getType() == "SimpleColor") {
                     SimpleColorMaterial *scm = (SimpleColorMaterial *) mtl.getMaterialData();
-                    
-//                glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, NULL);
-//                glBufferSubData(GL_ARRAY_BUFFER,
-//                        vSize,
-//                        vSize,
-//                        tmpNorms);
-                    
-                    
+
+                    //                glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, NULL);
+                    //                glBufferSubData(GL_ARRAY_BUFFER,
+                    //                        vSize,
+                    //                        vSize,
+                    //                        tmpNorms);
+
+
                     //https://www.opengl.org/discussion_boards/showthread.php/183319-add-color-to-VBOs-best-practices
 
                 }
 
-                
+
 
                 delete tmpInds;
                 delete tmpVerts;
@@ -184,8 +226,8 @@ namespace Ballistic {
                 glBindBuffer(GL_ARRAY_BUFFER, 0);
                 glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
             }
-            
-            
+
+
 
         }
     }
