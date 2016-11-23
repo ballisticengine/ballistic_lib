@@ -5,10 +5,8 @@ namespace Ballistic {
     namespace IO {
         namespace System {
 
-            
-
             void System::initialize() {
-               
+
                 this->ioDriver->initialize(0);
                 this->exit = false;
             }
@@ -18,21 +16,21 @@ namespace Ballistic {
             }
 
             void System::eventLoop() {
-                void *rawEvent;
+                void *rawEvent = this->ioDriver->createEvent();
                 IoEvent event;
                 Ballistic::Core::Events::Event tickEvent("ioTick");
-                
+
                 while (!this->exit) {
-                    rawEvent = this->ioDriver->poolEvent();
-                    if (rawEvent) {
+                    while (this->ioDriver->pollEvent(rawEvent)) {
                         this->ioDriver->transform(rawEvent, &event);
                         this->dispatcher->dispatch(&event);
+
                     }
                     this->dispatcher->dispatch(&tickEvent);
                     this->ioDriver->flush();
                 }
-                
-                
+
+
             }
 
             void System::shutdown() {

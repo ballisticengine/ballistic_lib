@@ -9,13 +9,15 @@ namespace Ballistic {
                 screen = SDL_GetWindowSurface(window);
             }
 
-
-
-            void *SDLIoDriver::poolEvent() {
-                
-                while (SDL_PollEvent(& event)) {
-                    return  (void *)&event;
+            void * SDLIoDriver::createEvent() {
+                return (void *)new SDL_Event;
+            }
+            
+            bool SDLIoDriver::pollEvent(void *event) {
+                if (SDL_PollEvent((SDL_Event *)event)) {
+                    return true;
                 }
+                return false;
             }
             
             void SDLIoDriver::transform(void *rawEvent, Ballistic::IO::System::IoEvent *event) {
