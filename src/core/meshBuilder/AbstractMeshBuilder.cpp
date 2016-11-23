@@ -13,13 +13,13 @@ namespace Ballistic {
                 this->currentPoly = Polygon();
             }
 
-            void AbstractMeshBuilder::addVertex(Vector3d &coords) {
+            void AbstractMeshBuilder::addPolyVertex(Vector3d coords) {
                 this->vertexCounter++;
 
                 this->currentPoly.vertices.push_back(coords);
             }
 
-            void AbstractMeshBuilder::addNormal(Vector3d &coords) {
+            void AbstractMeshBuilder::addPolyNormal(Vector3d coords) {
                 this->currentPoly.normals.push_back(coords);
             }
 

@@ -22,9 +22,10 @@ namespace Ballistic {
                 AbstractMeshBuilder();
                 //virtual void setDirection(FrontFaceDir sourceDirection, FrontFaceDir targetDirection);
                 virtual void startPolygon();
-                virtual void addVertex(Vector3d &coords);
-                virtual void addNormal(Vector3d &coords);
+                virtual void addPolyVertex(Vector3d coords);
+                virtual void addPolyNormal(Vector3d coords);
                 virtual void endPolygon();
+                //virtual void reset();
                 
                 virtual void * build()=0;
             };

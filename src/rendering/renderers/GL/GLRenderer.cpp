@@ -106,7 +106,10 @@ namespace Ballistic {
                 glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vboData->eId);
 
                 glBufferData(GL_ELEMENT_ARRAY_BUFFER, m.n_triangles * sizeof (GLushort)*3, tmpInds, GL_STATIC_DRAW);
-
+                
+                delete tmpInds;
+                delete tmpVerts;
+                
                 return vbo;
 
             }
