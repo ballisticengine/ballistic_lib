@@ -12,11 +12,11 @@ namespace Ballistic {
 
             }
 
-            void VboManager::addVbo(std::string id, void * vboId) {
-                this->vboMap[id] = vboId;
+            void VboManager::addVbo(std::string id, Vbo * vbo) {
+                this->vboMap[id] = vbo;
             }
 
-            void* VboManager::getVbo(std::string id) {
+            Vbo* VboManager::getVbo(std::string id) {
                 return this->vboMap[id];
             }
         }

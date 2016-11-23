@@ -5,6 +5,7 @@
 
 #include "types/spatial/Vector3d.hpp"
 #include "Polygon.hpp"
+#include "Constants.hpp"
 
 namespace Ballistic {
     namespace Core {
@@ -19,6 +20,7 @@ namespace Ballistic {
                 Polygon currentPoly;
             public:
                 AbstractMeshBuilder();
+                //virtual void setDirection(FrontFaceDir sourceDirection, FrontFaceDir targetDirection);
                 virtual void startPolygon();
                 virtual void addVertex(Vector3d &coords);
                 virtual void addNormal(Vector3d &coords);

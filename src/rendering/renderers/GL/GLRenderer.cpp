@@ -64,7 +64,7 @@ namespace Ballistic {
 
             }
 
-            void *GLRenderer::makeMeshVbo(const Mesh &m) {
+            Vbo *GLRenderer::makeMeshVbo(const Mesh &m) {
 
                 GLfloat *tmpVerts = new GLfloat[m.n_vertices * 3];
                 GLushort *tmpInds = new GLushort[m.n_triangles * 3];
@@ -89,18 +89,21 @@ namespace Ballistic {
 
                 }
 
-                GLVbo *vbo = new GLVbo();
-                vbo->vId;
+                 GLVbo *vboData = new GLVbo();
+                Vbo *vbo= new Vbo(&m, vboData);
+                
+               
+                vboData->vId;
 
-                glGenBuffers(1, &vbo->vId);
+                glGenBuffers(1, &vboData->vId);
 
-                glBindBuffer(GL_ARRAY_BUFFER, vbo->vId);
+                glBindBuffer(GL_ARRAY_BUFFER, vboData->vId);
 
                 glBufferData(GL_ARRAY_BUFFER, m.n_vertices * sizeof (GLfloat)*3, tmpVerts, GL_STATIC_DRAW);
 
-                glGenBuffers(1, &vbo->eId);
+                glGenBuffers(1, &vboData->eId);
 
-                glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vbo->eId);
+                glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vboData->eId);
 
                 glBufferData(GL_ELEMENT_ARRAY_BUFFER, m.n_triangles * sizeof (GLushort)*3, tmpInds, GL_STATIC_DRAW);
 
@@ -108,9 +111,10 @@ namespace Ballistic {
 
             }
 
-            void GLRenderer::renderVbo(void* vbo) {
+            void GLRenderer::renderVbo(Vbo* vbo) {
 
-                GLVbo *glVbo = (GLVbo *) vbo;
+                GLVbo *glVbo = (GLVbo *) vbo->rendererData;
+                const Mesh *m = vbo->mesh;
 
 
 
@@ -121,7 +125,7 @@ namespace Ballistic {
 
                 glVertexPointer(3, GL_FLOAT, 0, (char *) 0);
 
-                glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_SHORT, 0);
+                glDrawElements(GL_TRIANGLES, m->n_triangles*3, GL_UNSIGNED_SHORT, 0);
                 //                glDrawArrays(GL_POINTS, 0, 3);
 
                 glDisableClientState(GL_VERTEX_ARRAY);
