@@ -2,6 +2,7 @@
 #include <gtest/gtest.h>
 
 #include "types/spatial/Vector3d.hpp"
+#include "VectorAssert.hpp"
 using namespace Ballistic::Core::Types::Spatial;
 
 TEST(Construct, VectorTest) {
@@ -61,8 +62,23 @@ TEST(DotProduct, VectorTest) {
 
 TEST(CrossProduct, VectorTest) {
 
-    Vector3d a(-1, 7, 4), b(-5, 8, 4);
+    Vector3d a(-1, 7, 4), b(-5, 8, 4), c(-1, -1, -1), d(2, 2, 2);
+
+    Vector3d cpV = a.crossProduct(b), correctA(-4, -16, 27), correctB(0, 0, 0);
     
-    Vector3d cpV = a.crossProduct(b);
-    //(-4, -16, 27)
+    ASSERT_VECTORS_EQ(cpV, correctA);
+    ASSERT_VECTORS_EQ(c.crossProduct(d), correctB);
+}
+
+TEST(Normalize, VectorTest) {
+    Vector3d 
+        a(3, 10, 1);
+            
+    Vector3d aN = a.normalize(), aC(0.286039, 0.953463, 0.0953463);
+    
+    //TODO: approximate assertion, since those are real numbers
+    //ASSERT_VECTORS_EQ(aN, aC);
+    
+    
+    
 }

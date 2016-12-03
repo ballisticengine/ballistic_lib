@@ -57,9 +57,6 @@ namespace Ballistic {
                     return v;
                 }
 
-                
-                
-
                 Vector3d & Vector3d::operator=(const Vector3d &v) {
                     x = v.x;
                     y = v.y;
