@@ -22,12 +22,13 @@ namespace Ballistic {
                     Vector3d();
                     virtual Vector3d & operator=(const Vector3d &v);
                     virtual const bool operator==(const Vector3d &v);
+                    
                     virtual Vector3d unit();
                     virtual Vector3d normalize();
                     scalar_t length();
+                    
                     Vector3d crossProduct(const Vector3d & b);
                     scalar_t dotProduct(const Vector3d & b);
-                    Vector3d operator^(const Vector3d &b);
 
                     Vector3d operator+(const Vector3d &b);
                     Vector3d operator+(const scalar_t val);

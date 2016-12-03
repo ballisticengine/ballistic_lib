@@ -9,17 +9,41 @@ namespace Ballistic {
                     x = y = z = 0;
                 }
 
+                Vector3d::Vector3d(const Vector3d &v) {
+                    x = v.x;
+                    y = v.y;
+                    z = v.z;
+                }
+
+                Vector3d::Vector3d(scalar_t x, scalar_t y, scalar_t z) {
+                    this->x = x;
+                    this->y = y;
+                    this->z = z;
+                }
+                
+                scalar_t Vector3d::ifZero(scalar_t value) {
+                    if (value > 0) {
+                        return 1;
+                    } else if (value < 0) {
+                        return -1;
+                    }
+                    return 0;
+
+                }
+
+                Vector3d Vector3d::unit() {
+                    Vector3d v;
+                    v = *this;
+                    v.x = ifZero(v.x);
+                    v.y = ifZero(v.y);
+                    v.z = ifZero(v.z);
+                    return v;
+                }
+
+                
                 std::ostream & Vector3d::operator<<(std::ostream & ostr) {
                     ostr << this->x << ", " << this->y << ", " << this->z;
                     return ostr;
-                }
-
-                Vector3d Vector3d::operator^(const Vector3d &b) {
-                    Vector3d v;
-                    v.x = y * b.z - z * b.y;
-                    v.y = z * b.x - x * b.z;
-                    v.z = x * b.y - y * b.x;
-                    return v;
                 }
 
                 Vector3d Vector3d::crossProduct(const Vector3d & b) {
@@ -33,42 +57,14 @@ namespace Ballistic {
                     return v;
                 }
 
-                Vector3d Vector3d::unit() {
-                    Vector3d v;
-                    v = *this;
-                    v.x = ifZero(v.x);
-                    v.y = ifZero(v.y);
-                    v.z = ifZero(v.z);
-                    return v;
-                }
-
-                Vector3d::Vector3d(const Vector3d &v) {
-                    x = v.x;
-                    y = v.y;
-                    z = v.z;
-                }
-
-                Vector3d::Vector3d(scalar_t x, scalar_t y, scalar_t z) {
-                    this->x = x;
-                    this->y = y;
-                    this->z = z;
-                }
+                
+                
 
                 Vector3d & Vector3d::operator=(const Vector3d &v) {
                     x = v.x;
                     y = v.y;
                     z = v.z;
                     return *this;
-                }
-
-                scalar_t Vector3d::ifZero(scalar_t value) {
-                    if (value > 0) {
-                        return 1;
-                    } else if (value < 0) {
-                        return -1;
-                    }
-                    return 0;
-
                 }
 
                 scalar_t Vector3d::length() {
@@ -143,21 +139,6 @@ namespace Ballistic {
                 Vector3d Vector3d::operator*(const scalar_t a) {
                     return Vector3d(x*a, y*a, z * a);
                 }
-
-                //            scalar_t Vector3d::operator!() {
-                //                return sqrt(x * x + y * y + z * z);
-                //            }
-                //
-                //            Vector3d Vector3d::operator|(scalar_t length) {
-                //                Vector3d ret;
-                //                ret = *this;
-                //                ret = ret * (length / !ret);
-                //                return ret;
-                //            }
-                //
-                //            scalar_t Vector3d::operator%(const Vector3d &b) {
-                //                return dotProduct(b);
-                //            }
 
                 Vector3d Vector3d::operator-() {
                     return Vector3d(-x, -y, -z);
