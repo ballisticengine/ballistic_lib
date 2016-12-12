@@ -36,8 +36,6 @@ namespace Ballistic {
                 } else {
                     return distance(vectors.begin(), it);
                 }
-
-
             }
 
             void * TriMeshBuilder::build() {

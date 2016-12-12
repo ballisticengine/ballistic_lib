@@ -11,7 +11,6 @@ namespace Ballistic {
             protected:
                 vector<Vector3d> vertices, normals;
                 Triangle *triangles;
-                
                 virtual size_t addVertex(Vector3d v);
                 size_t  addNormal(Vector3d v);
                 size_t addIfNotExists(Vector3d v, vector<Vector3d> &vectors);
