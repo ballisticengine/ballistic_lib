@@ -7,6 +7,7 @@
 #include "PipelineTest.cpp"
 #include "MeshBuilderTest.cpp"
 #include "SceneTest.cpp"
+#include "CliTest.cpp"
 
 int main(int argc, char **argv) {
     ::testing::InitGoogleTest(&argc, argv);

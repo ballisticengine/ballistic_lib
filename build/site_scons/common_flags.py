@@ -8,10 +8,10 @@ GENERAL_LIBS = ['stdc++', 'pthread', 'python2.7', 'dl', ]
 TEST_LIBS = ['gtest' ]
 ALL_LIBS = GENERAL_LIBS + BOOST_LIBS + SDL_LIBS + GL_LIBS
 CPPATH = [
-    '/usr/include/python2.7',
-    '/usr/include/bullet',
-    './src/ui/librocket_interfaces',
-    '/usr/local/include/Rocket',
+   # '/usr/include/python2.7',
+   # '/usr/include/bullet',
+   # './src/ui/librocket_interfaces',
+    #'/usr/local/include/Rocket',
     '../src/core',
     '../src/io',
 ]
