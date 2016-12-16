@@ -14,6 +14,8 @@ modules = [
     Glob(src + 'meshBuilder/*.cpp'),
     Glob(src + 'resources/*.cpp'),
     Glob(src + 'cli/*.cpp'),
+    Glob(src + 'cli/Output/*.cpp'),
+    Glob(src + 'cli/Input/*.cpp'),
 ]
 
 env = Environment(CPPPATH=CPPATH)
