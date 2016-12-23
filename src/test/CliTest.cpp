@@ -3,14 +3,14 @@
 #include <limits.h>
 #include <gtest/gtest.h>
 
-#include "cli/App.hpp"
-#include "cli/Command.hpp"
-#include "cli/Output/NullOutput.hpp"
-#include "cli/AppParams.hpp"
+#include "../cli/App.hpp"
+#include "../cli/Command.hpp"
+#include "../cli/Output/NullOutput.hpp"
+#include "../cli/AppParams.hpp"
 
 
-using namespace Ballistic::Core::CLI;
-using namespace Ballistic::Core::CLI::Output;
+using namespace Ballistic::CLI;
+using namespace Ballistic::CLI::Output;
 
 class TestCommand : public Command {
 protected:

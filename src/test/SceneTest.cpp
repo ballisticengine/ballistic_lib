@@ -2,11 +2,11 @@
 #include <limits.h>
 #include <gtest/gtest.h>
 
-#include "../../scene/Object.hpp"
-#include "../types/graphics/Mesh.hpp"
-#include "../types/graphics/Color.hpp"
-#include "../types/graphics/materials/Material.hpp"
-#include "../types/graphics/materials/SimpleColorMaterial.hpp"
+#include "../scene/Object.hpp"
+#include "../core/types/graphics/Mesh.hpp"
+#include "../core/types/graphics/Color.hpp"
+#include "../core/types/graphics/materials/Material.hpp"
+#include "../core/types/graphics/materials/SimpleColorMaterial.hpp"
 
 using namespace Ballistic::Scene;
 using namespace Ballistic::Core::Types::Graphics;

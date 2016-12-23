@@ -13,9 +13,10 @@ modules = [
     Glob(src + 'events/*.cpp'),
     Glob(src + 'meshBuilder/*.cpp'),
     Glob(src + 'resources/*.cpp'),
-    Glob(src + 'cli/*.cpp'),
-    Glob(src + 'cli/Output/*.cpp'),
-    Glob(src + 'cli/Input/*.cpp'),
+    Glob(src + 'resources/storage/*.cpp'),
+    Glob(src + 'resources/loader/*.cpp'),
+    Glob(src + 'resources/exceptions/*.cpp'),
+    Glob(src + 'dynamicLoad/*.cpp'),
 ]
 
 env = Environment(CPPPATH=CPPATH)

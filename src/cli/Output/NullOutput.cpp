@@ -1,7 +1,6 @@
 #include "NullOutput.hpp"
 
 namespace Ballistic {
-    namespace Core {
         namespace CLI {
             namespace Output {
 
@@ -12,5 +11,5 @@ namespace Ballistic {
                 }
             }
         }
-    }
+    
 }

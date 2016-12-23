@@ -8,6 +8,7 @@
 #include "MeshBuilderTest.cpp"
 #include "SceneTest.cpp"
 #include "CliTest.cpp"
+#include "ResourceTest.cpp"
 
 int main(int argc, char **argv) {
     ::testing::InitGoogleTest(&argc, argv);

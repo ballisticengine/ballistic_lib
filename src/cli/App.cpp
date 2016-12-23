@@ -6,10 +6,9 @@ using std::cout;
 using std::endl;
 
 namespace Ballistic {
-    namespace Core {
         namespace CLI {
 
-            App::App(AppParams *appParams, Ballistic::Core::CLI::Output::OutputInterface *output) 
+            App::App(AppParams *appParams, Ballistic::CLI::Output::OutputInterface *output) 
             : params(appParams), output(output) {
                 
             }
@@ -53,5 +52,4 @@ namespace Ballistic {
                 }
             }
         }
-    }
 }

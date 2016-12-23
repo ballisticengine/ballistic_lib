@@ -10,7 +10,6 @@
 #include "AppParams.hpp"
 
 namespace Ballistic {
-    namespace Core {
         namespace CLI {
 
             class App {
@@ -24,9 +23,9 @@ namespace Ballistic {
                 const char **argv;
                 std::map<std::string, Command *> commands;
                 AppParams *params;
-                Ballistic::Core::CLI::Output::OutputInterface *output;
+                Ballistic::CLI::Output::OutputInterface *output;
             public:
-                App(AppParams *appParams, Ballistic::Core::CLI::Output::OutputInterface *output);
+                App(AppParams *appParams, Ballistic::CLI::Output::OutputInterface *output);
 
                 virtual void registerCommand(Command *command);
 
@@ -37,7 +36,6 @@ namespace Ballistic {
                 virtual void cleanupCommands();
             };
         }
-    }
 }
 
 

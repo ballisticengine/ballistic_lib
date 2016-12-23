@@ -1,0 +1,14 @@
+from site_scons import *
+
+src = '../src/loaders/'
+
+modules = [
+    Glob(src + '*.cpp'),
+]
+
+env = Environment(CPPPATH=CPPATH)
+
+
+env.Library('loaders', modules, LIBS=ALL_LIBS+['core'], LIBPATH='.', CXXFLAGS=COMMON_CXX_FLAGS, )
+
+
