@@ -17,8 +17,8 @@ namespace Ballistic {
     namespace Loaders {
 
         class LoaderXML : public Ballistic::Core::Resources::Loader {
-        protected:
-            void toShape(ptree &geom, ptree &shape_xml, void *s);
+//        protected:
+//            void toShape(ptree &geom, ptree &shape_xml, void *s);
         public:
             virtual Ballistic::Core::Resources::extensionsSet getFileExtensions();
             virtual std::string getType();

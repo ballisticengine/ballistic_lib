@@ -1,5 +1,7 @@
 #include "LoaderXML.hpp"
 
+#include "../core/meshBuilder/TriMeshBuilder.hpp"
+
 #include <sstream>
 
 namespace Ballistic {
@@ -28,21 +30,31 @@ namespace Ballistic {
 
         void *LoaderXML::loadFromData(char *data, size_t size) {
 
+            using Ballistic::Core::MeshBuilder::TriMeshBuilder;
+
+            TriMeshBuilder builder;
+
             stringstream ss;
             ss << data;
             ptree pt;
             read_xml(ss, pt);
-            //            Shape *shape_p = new Shape();
-            //            ptree *tree = (ptree *) data,
-            //                    & geom = tree->get_child("shape.geom"),
-            //                    & shape = tree->get_child("shape")
-            //                    ;
-            //            this->toShape(geom, shape, shape_p);
-            //
-            //            return (void *) shape_p;
+
+            ptree shp = pt.get_child("shape"),
+                    geom = shp.get_child("geom"),
+                    verts = geom.get_child("vertices"),
+                    faces = geom.get_child("faces"),
+                    uvs = geom.get_child("uvs")
+                    ;
+
+            size_t
+            v_count = verts.size(),
+                    f_count = faces.size(),
+                    uv_count = uvs.size(),
+                    vpf = 3
+                    ;
         }
 
-        void LoaderXML::toShape(ptree &geom, ptree &shape_xml, void *s) {
+//        void LoaderXML::toShape(ptree &geom, ptree &shape_xml, void *s) {
 
             //            ptree
             //            verts = geom.get_child("vertices"),
@@ -215,7 +227,7 @@ namespace Ballistic {
             //                cout << "No loc for " << type;
             //            }
 
-        }
+//        }
     }
 }
 

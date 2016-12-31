@@ -16,7 +16,8 @@ modules = [
     Glob(src + 'resources/storage/*.cpp'),
     Glob(src + 'resources/loader/*.cpp'),
     Glob(src + 'resources/exceptions/*.cpp'),
-    Glob(src + 'dynamicLoad/*.cpp'),
+    Glob(src + 'pluginLoad/*.cpp'),
+    Glob(src + 'helpers/*.cpp'),
 ]
 
 env = Environment(CPPPATH=CPPATH)

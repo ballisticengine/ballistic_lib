@@ -4,16 +4,17 @@
 #include <string>
 
 #include "PluginLoader.hpp"
-
+#include "../resources/loader/Loader.hpp"
 
 
 namespace Ballistic {
     namespace Core {
-        namespace DynamicLoad {
+        namespace PluginLoad {
             class ResourcePluginLoader : public PluginLoader {
             public:
-                ResourcePluginLoader(std::string wd);
-                 void * getLoader(std::string ext, std::string type = "none");
+                ResourcePluginLoader();
+                 Ballistic::Core::Resources::Loader * getLoaderByType(std::string type);
+                 
             };
         }
     }
