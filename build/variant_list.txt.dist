@@ -8,3 +8,4 @@ rendering.scons
 demo.sdlandpipeline.scons
 demo.sdlsystem.scons
 demo.renderingpipeline.scons
+demo.resources.scons

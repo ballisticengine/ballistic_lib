@@ -1,4 +1,6 @@
 #include "ResourceManager.hpp"
+#include "../resources/loader/Results.hpp"
+#include <iostream>
 
 namespace Ballistic {
     namespace Core {
@@ -14,25 +16,47 @@ namespace Ballistic {
             }
 
             ResourceHandle & ResourceManager::get(std::string resourceId, std::string type) {
-                
+
                 if (resourceMap.find(resourceId) == resourceMap.end()) {
                     Loader *loader = (Loader *)this->pluginLoader.
                             getLoaderByType(type);
-                    
+
                     using Ballistic::Core::Resources::Storage::FileData;
+                    using Ballistic::Core::Resources::MeshAndMaterialResult;
                     
                     FileData fileData = this->storageHandler->getResource(resourceId);
+
+                    void *loadedData = loader->loadFromData(fileData.data, fileData.size);
                     
-                    ResourceHandle *handle = new 
-                            ResourceHandle(resourceId, type, loader->loadFromData(fileData.data, fileData.size));
                     
-                    
+                    ResourceHandle *handle = new
+                            ResourceHandle(resourceId, type, loadedData);
+
+
                     this->resourceMap[resourceId] = handle;
+                    this->resolveDependencies(loader);
+                    
                     return *handle;
                 } else {
                     return *this->resourceMap[resourceId];
                 }
-                
+
+            }
+
+            void ResourceManager::resolveDependencies(Loader *loader) {
+                using namespace std;
+                cout << "DEPSOLVE" << endl;
+                dependencyVector dependencies = loader->getDependencies();
+                for (size_t i = 0; i < dependencies.size(); i++) {
+                    
+                    ResourceHandle handle = this->get(dependencies[i].resourceId, dependencies[i].type);
+                    *dependencies[i].target = handle.getData();
+                    cout << "ResId " << 
+                            dependencies[i].resourceId << ", " << 
+                            dependencies[i].type << ", " << handle.getData() 
+                            << endl;
+                }
+                loader->cleanDependencies();
             }
         }
     }

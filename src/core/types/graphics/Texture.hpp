@@ -5,7 +5,7 @@ namespace Ballistic {
         namespace Types {
             namespace Graphics {
                 struct Texture {
-                    char *pixels;
+                    void *pixels;
                     size_t width, height, size, bpp;
                     
                 };

@@ -6,7 +6,7 @@ namespace Ballistic {
         namespace Renderers {
 
             struct GLVbo {
-                GLuint vId, eId, vaoId, nOffset;
+                GLuint vId, eId, vaoId, uvId, nOffset, uvOffset;
                 
                 
                 

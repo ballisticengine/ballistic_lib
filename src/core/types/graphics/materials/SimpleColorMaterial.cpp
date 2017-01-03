@@ -8,9 +8,13 @@ namespace Ballistic {
                 namespace Materials {
 
                     SimpleColorMaterial::SimpleColorMaterial(Color  color) : Material() {
-                        this->color = color;
+                        this->setColor(color);
                     }
 
+                    void SimpleColorMaterial::setColor(Color &color) {
+                        this->color = color;
+                    }
+                    
                     std::string  SimpleColorMaterial::getType() {
                         return "SimpleColor";
                     }

@@ -15,7 +15,7 @@ namespace Ballistic {
     namespace Core {
         namespace PluginLoad {
 
-            namespace fs = boost::filesystem;
+         
 
            
             typedef std::map<std::string, PluginHandle> PluginMap;

@@ -3,7 +3,7 @@
 
 namespace Ballistic {
     namespace Core {
-        namespace MeshBuilder {
+        namespace Builders {
             enum class FrontFaceDir {
                 MB_CLOCKWISE,
                 MB_COUNTERCLOCKWISE,

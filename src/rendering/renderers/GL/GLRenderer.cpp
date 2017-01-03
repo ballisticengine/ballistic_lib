@@ -1,5 +1,6 @@
 #include "types/common.hpp"
 #include "types/graphics/materials/SimpleColorMaterial.hpp"
+#include "types/graphics/materials/TextureMaterial.hpp"
 #include "types/graphics/Color.hpp"
 #include "GLRenderer.hpp"
 #include "GLVbo.hpp"
@@ -25,7 +26,7 @@ namespace Ballistic {
                 glFrontFace(GL_CCW);
                 glEnable(GL_CULL_FACE);
                 glEnable(GL_DEPTH_TEST);
-                glDisable(GL_TEXTURE_2D);
+                glEnable(GL_TEXTURE_2D);
                 glEnable(GL_NORMALIZE);
                 glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 
@@ -38,7 +39,7 @@ namespace Ballistic {
                 glLoadIdentity();
 
                 glFrustum(-2, 2, -2, 2, 2, 200);
-                
+
                 setUpShaders();
 
             }
@@ -58,8 +59,8 @@ namespace Ballistic {
                 glShaderSourceARB(vhandle, 1, &vtext, 0);
                 glShaderSourceARB(fhandle, 1, &ftext, 0);
 
-//                delete vtext;
-//                delete ftext;
+                //                delete vtext;
+                //                delete ftext;
 
                 glCompileShaderARB(vhandle);
                 glCompileShaderARB(fhandle);
@@ -79,10 +80,10 @@ namespace Ballistic {
                 glGetObjectParameterivARB(vhandle, GL_COMPILE_STATUS, &vcompiled);
                 glGetObjectParameterivARB(vhandle, GL_COMPILE_STATUS, &fcompiled);
 
-              
-                       cout << "Status:" << vcompiled << ", " << fcompiled <<
-                               ", " << linked << endl;
-                   
+
+                cout << "Status:" << vcompiled << ", " << fcompiled <<
+                        ", " << linked << endl;
+
                 glUseProgram(p);
 
             }
@@ -97,11 +98,11 @@ namespace Ballistic {
                 glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
                 glMatrixMode(GL_MODELVIEW);
                 glLoadIdentity();
-                glTranslatef(0, 0, -3);
+                glTranslatef(0, 0, -5);
 
-                glPointSize(2);
+                //glPointSize(1);
 
-                glColor4f(1, 0, 0, 1);
+                //glColor4f(1, 0, 0, 1);
             }
 
             void GLRenderer::end() {
@@ -150,7 +151,6 @@ namespace Ballistic {
 
                 vboData->vId;
 
-                //glGenVertexArrays(1, &vboData->vaoId);
 
 
                 glGenBuffers(1, &vboData->vId);
@@ -174,11 +174,11 @@ namespace Ballistic {
 
                 vboData->nOffset = vSize;
 
-                using Ballistic::Core::Types::Graphics::Color;
-                using Ballistic::Core::Types::Graphics::Materials::SimpleColorMaterial;
+                using namespace Ballistic::Core::Types::Graphics;
+                using namespace Ballistic::Core::Types::Graphics::Materials;
 
 
-
+                vboData->uvId = 0;
                 if (mtl.getType() == "SimpleColor") {
                     SimpleColorMaterial *scm = (SimpleColorMaterial *) mtl.getMaterialData();
 
@@ -190,6 +190,31 @@ namespace Ballistic {
 
 
                     //https://www.opengl.org/discussion_boards/showthread.php/183319-add-color-to-VBOs-best-practices
+
+                } else if (mtl.getType() == "Texture") {
+                    TextureMaterial *tm = (TextureMaterial *) mtl.getMaterialData();
+                    UVMap *uvMap = tm->getUVMap();
+                    glGenBuffers(1, &vboData->uvId);
+                    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vboData->uvId);
+
+                    size_t vn = 0;
+                    GLfloat *tmpUVS = new GLfloat[uvMap->count * 2];
+                    GLushort *tmpUvInds = new GLushort[uvMap->count * 3];
+
+                    for (size_t i = 0; i < uvMap->count; i++) {
+                        tmpUVS[vn++] = uvMap->uvs[i].x;
+                        tmpUVS[vn++] = uvMap->uvs[i].y;
+
+                    }
+                    for (size_t i = 0; i < uvMap->count * 3; i++) {
+                        tmpUvInds[i] = uvMap->triangles->indices[i];
+                    }
+                    vboData->uvOffset = vboData->nOffset + vSize;
+                    glBufferData(GL_ELEMENT_ARRAY_BUFFER, uvMap->count * sizeof (GLushort) * 3, tmpUvInds, GL_STATIC_DRAW);
+                    glBufferSubData(GL_ARRAY_BUFFER,
+                            vboData->uvOffset,
+                            uvMap->count * 2,
+                            tmpUVS);
 
                 }
 
@@ -209,26 +234,52 @@ namespace Ballistic {
                 const Mesh *m = vbo->mesh;
 
                 glBindBuffer(GL_ARRAY_BUFFER, glVbo->vId);
-                glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, glVbo->eId);
 
+                if (glVbo->uvId) {
+                    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, glVbo->uvId);
+                    glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+                    glTexCoordPointer(2, GL_FLOAT, 0, 0);
+                }
                 glEnableClientState(GL_VERTEX_ARRAY);
                 glEnableClientState(GL_NORMAL_ARRAY);
 
-                glVertexPointer(3, GL_FLOAT, 0, (char *) 0);
 
+                glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, glVbo->eId);
+
+                glVertexPointer(3, GL_FLOAT, 0, (char *) 0);
                 glNormalPointer(GL_FLOAT, 0, BUFFER_OFFSET(glVbo->nOffset));
                 glDrawElements(GL_TRIANGLES, m->n_triangles * 3, GL_UNSIGNED_SHORT, 0);
 
 
                 glDisableClientState(GL_VERTEX_ARRAY);
-                glEnableClientState(GL_NORMAL_ARRAY);
+                glDisableClientState(GL_NORMAL_ARRAY);
+                glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 
-                glBindBuffer(GL_ARRAY_BUFFER, 0);
-                glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
             }
 
+            void GLRenderer::setupTexture(Ballistic::Core::Types::Graphics::Texture *texture) {
+                GLuint texId;
+                glGenTextures(1, &texId);
+                this->textureMap[texture] = texId;
+                glBindTexture(GL_TEXTURE_2D, texId);
 
+                glTexStorage2D(GL_TEXTURE_2D, 8, GL_RGBA, texture->width, texture->height);
 
+                glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
+                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER,
+                        GL_LINEAR);
+                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER,
+                        GL_LINEAR_MIPMAP_LINEAR);
+
+                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+                glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+
+                glTexImage2D(GL_TEXTURE_2D, 0, 4, texture->width, texture->height, 0, GL_RGBA,
+                        GL_UNSIGNED_BYTE, (GLvoid *) texture->pixels);
+
+                glGenerateMipmap(GL_TEXTURE_2D);
+            }
         }
     }
 }

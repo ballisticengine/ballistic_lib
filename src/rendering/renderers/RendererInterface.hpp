@@ -3,6 +3,7 @@
 
 #include "types/graphics/Mesh.hpp"
 #include "types/graphics/materials/Material.hpp"
+#include "types/graphics/Texture.hpp"
 #include "../VBO/Vbo.hpp"
 
 namespace Ballistic {
@@ -20,6 +21,7 @@ namespace Ballistic {
                 virtual void end()=0;
                 virtual Vbo* makeVbo(const Mesh &m,  Material &mtl)=0;
                 virtual void renderVbo(Vbo* vbo)=0;
+                virtual void setupTexture(Ballistic::Core::Types::Graphics::Texture *texture)=0;
                 
             };
         }

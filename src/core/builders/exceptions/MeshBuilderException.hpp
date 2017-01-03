@@ -3,7 +3,7 @@
 
 namespace Ballistic {
     namespace Core {
-        namespace MeshBuilder {
+        namespace Builders {
             namespace Exceptions {
                 class MeshBuilderException {
                     

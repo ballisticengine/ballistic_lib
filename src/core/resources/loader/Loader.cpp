@@ -13,9 +13,9 @@ namespace Ballistic {
                 return false;
             }
 
-            void Loader::addDependency(std::string file_name, void **target, std::string type) {
+            void Loader::addDependency(std::string resourceId, std::string type, void **target) {
                 Dependency dep;
-                dep.file_name = file_name;
+                dep.resourceId = resourceId;
                 dep.target = target;
                 dep.type = type;
                 dependencies.push_back(dep);
@@ -29,26 +29,7 @@ namespace Ballistic {
                 this->dependencies.clear();
             }
 
-            void *Loader::load(std::string file_name) {
-                using namespace std;
-                FILE* f = fopen(file_name.c_str(), "r");
-
-
-                fseek(f, 0, SEEK_END);
-                size_t size = ftell(f);
-
-                char* buffer = new char[size];
-
-                rewind(f);
-
-                fread(buffer, sizeof (char), size, f);
-
-                void * data = this->loadFromData(buffer, size);
-                
-                delete buffer;
-                
-                return data;
-            }
+            
 
             size_t Loader::getPriority() {
                 return 0;

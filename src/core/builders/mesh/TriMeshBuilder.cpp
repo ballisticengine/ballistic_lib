@@ -4,22 +4,10 @@
 
 namespace Ballistic {
     namespace Core {
-        namespace MeshBuilder {
+        namespace Builders {
             using namespace std;
 
-            TriMeshBuilder::TriMeshBuilder() : AbstractMeshBuilder() {
-
-            }
-
-            size_t TriMeshBuilder::addIfNotExists(Vector3d v, vector<Vector3d> &vectors) {
-                size_t index = findVector(v, vectors);
-                if (index == -1) {
-                    vectors.push_back(v);
-                    return vectors.size() - 1;
-                }
-
-                return index;
-            }
+           
 
             size_t TriMeshBuilder::addVertex(Vector3d v) {
                 return addIfNotExists(v, vertices);
@@ -28,17 +16,14 @@ namespace Ballistic {
             size_t TriMeshBuilder::addNormal(Vector3d v) {
                 return addIfNotExists(v, normals);
             }
-
-            size_t TriMeshBuilder::findVector(Vector3d & v, vector<Vector3d> & vectors) {
-                auto it = std::find(vectors.begin(), vectors.end(), v);
-                if (it == vectors.end()) {
-                    return -1;
-                } else {
-                    return distance(vectors.begin(), it);
-                }
+            
+            size_t  TriMeshBuilder::addUV(Vector3d v) {
+                return addIfNotExists(v, uvs); 
             }
 
-            void * TriMeshBuilder::build() {
+            
+
+            Ballistic::Core::Types::Graphics::Mesh * TriMeshBuilder::build() {
                 Mesh *m = new Mesh();
                 m->n_triangles = polygons.size();
 
@@ -59,6 +44,8 @@ namespace Ballistic {
                         size_t index = this->addNormal(n);
                         m->triangles[poly_i].normals[vertex_i] = index;
                     }
+                    
+                    
 
                     poly_i++;
                 }
@@ -77,6 +64,8 @@ namespace Ballistic {
                 for (size_t i = 0; i < m->n_normals; i++) {
                     m->normals[i] = normals[i];
                 }
+                
+                
 
                 return m;
             }

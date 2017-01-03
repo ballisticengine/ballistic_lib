@@ -2,14 +2,19 @@
 #define LOADER_DEPENDENCY_HPP
 #include <string>
 
+#include "../ResourceHandle.hpp"
+
 namespace Ballistic {
     namespace Core {
         namespace Resources {
 
             struct Dependency {
-                std::string file_name, type;
+                std::string resourceId, type;
                 void **target;
+                
             };
+
+            typedef std::vector<Dependency> dependencyVector;
 
         }
     }

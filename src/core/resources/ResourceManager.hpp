@@ -7,6 +7,7 @@
 #include "storage/ResourceStorageHandler.hpp"
 #include "../modules/Module.hpp"
 #include "../pluginLoad/ResourcePluginLoader.hpp"
+#include "loader/Loader.hpp"
 
 namespace Ballistic {
     namespace Core {
@@ -21,6 +22,7 @@ namespace Ballistic {
                 virtual void initialize() {} 
                 virtual void destroy() {}
                 ResourceManager(ResourceStorageHandler *storageHandler);
+                virtual void resolveDependencies(Loader *loader);
                 ResourceHandle & get(std::string resourceId, std::string type);
                  Ballistic::Core::PluginLoad::ResourcePluginLoader & getLoader();
 //                size_t unlink(std::string resourceId);

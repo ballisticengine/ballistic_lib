@@ -2,13 +2,13 @@
 #include <limits.h>
 #include <gtest/gtest.h>
 
-#include "meshBuilder/AbstractMeshBuilder.hpp"
-#include "meshBuilder/TriMeshBuilder.hpp"
+#include "builders/mesh/AbstractMeshBuilder.hpp"
+#include "builders/mesh/TriMeshBuilder.hpp"
 #include "types/graphics/Mesh.hpp"
 
 #include "VectorAssert.hpp"
 
-using namespace Ballistic::Core::MeshBuilder;
+using namespace Ballistic::Core::Builders;
 using namespace Ballistic::Core::Types::Graphics;
 
 TEST(Basic, MeshBuilderTest) {

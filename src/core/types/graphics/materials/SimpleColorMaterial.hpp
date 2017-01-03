@@ -17,7 +17,8 @@ namespace Ballistic {
                     public:
                         SimpleColorMaterial(Color  color);
                         Color & getColor();
-                        std::string getType();
+                        virtual void setColor(Color &color);
+                        virtual std::string getType();
                     };
                 }
             }

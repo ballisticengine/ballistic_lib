@@ -3,7 +3,7 @@
 namespace Ballistic {
     namespace Core {
         namespace PluginLoad {
-
+               namespace fs = boost::filesystem;
             PluginLoader::PluginLoader() {
                 
             }
