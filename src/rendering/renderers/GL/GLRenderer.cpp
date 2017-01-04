@@ -23,7 +23,7 @@ namespace Ballistic {
 
                 glCullFace(GL_FRONT);
                 glDisable(GL_LIGHTING);
-                glFrontFace(GL_CCW);
+                glFrontFace(GL_CW);
                 glEnable(GL_CULL_FACE);
                 glEnable(GL_DEPTH_TEST);
                 glEnable(GL_TEXTURE_2D);

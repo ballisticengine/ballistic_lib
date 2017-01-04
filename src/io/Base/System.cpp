@@ -24,6 +24,7 @@ namespace Ballistic {
                     while (this->ioDriver->pollEvent(rawEvent)) {
                         this->ioDriver->transform(rawEvent, &event);
                         this->dispatcher->dispatch(&event);
+                        event.reset();
 
                     }
                     this->dispatcher->dispatch(&tickEvent);

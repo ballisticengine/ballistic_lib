@@ -17,7 +17,8 @@ namespace Ballistic {
                 IOEVENT_MOUSEUP,
                 IOEVENT_MOUSEDOWN,
                 IOEVENT_MOUSECLICK,
-                IOEVENT_OTHER
+                IOEVENT_OTHER,
+                IOEVENT_NONE,
             };
 
             struct KeyData {
@@ -36,6 +37,7 @@ namespace Ballistic {
                 IoEventType type;
                 KeyData keyData;
                 MouseData mouseData;
+                void reset();
             };
         }
     }
