@@ -8,7 +8,7 @@
 #include "../../rendering/renderers/GL/GLRenderer.hpp"
 #include "../../rendering/renderingPipeline/Tasks/BeginFrameTask.hpp"
 #include "../../rendering/renderingPipeline/Tasks/EndFrameTask.hpp"
-#include "../../rendering/renderingPipeline/Tasks/RenderSceneTask.hpp"
+#include "../../scene/rendering/RenderSceneTask.hpp"
 #include "types/graphics/materials/Material.hpp"
 #include "types/graphics/materials/SimpleColorMaterial.hpp"
 #include "types/graphics/materials/TextureMaterial.hpp"
@@ -24,8 +24,9 @@
 #include "../../loaders/LoaderXML.hpp"
 #include "../../loaders/TextureLoader.hpp"
 #include "../../core/resources/loader/Results.hpp"
-#include "../../core/scene/Node.hpp"
-#include "../../core/scene/ObjectNode.hpp"
+#include "../../scene/Node.hpp"
+#include "../../scene/MeshNode.hpp"
+#include "../../scene/TransformNode.hpp"
 #include "../../core/calc/MatrixCalculator.hpp"
 
 using namespace std;
@@ -41,7 +42,7 @@ using Ballistic::Core::Types::Graphics::Color;
 using namespace Ballistic::Core::Resources;
 using namespace Ballistic::Core::Resources::Storage;
 using namespace Ballistic::Loaders;
-using namespace Ballistic::Core::Scene;
+using namespace Ballistic::Scene;
 using namespace Ballistic::Core::Calc;
 
 int main() {
@@ -66,7 +67,7 @@ int main() {
 
     Ballistic::Rendering::Pipeline::BeginFrameTask bft;
     Ballistic::Rendering::Pipeline::EndFrameTask eft;
-    Ballistic::Rendering::Pipeline::RenderSceneTask rst;
+    Ballistic::Scene::RenderSceneTask rst;
 
     MatrixCalculator mc;
 
@@ -108,45 +109,35 @@ int main() {
     //rdr.setupTexture(tmtl->getTexture());
     rdr.setupTexture((Texture *) tH.getData());
 
-    Node scene;
-    scene.setType(NodeType::TYPE_SCENE);
+    TransformNode scene;
 
     mc.identity(scene.getMatrix());
 
     mc.translate(scene.getMatrix(), Vector3d(0, 0, -10));
 
-    rst.setRootNode(&scene);
-
     Ballistic::Rendering::Vbo::Vbo *vboV = rdr.makeVbo(*m, *tmtl);
 
-    Node model, model2, model3;
+    MeshNode model(m, tmtl, vboV), model2(m, tmtl, vboV), model3(m, tmtl, vboV);
 
-    model.setType(NodeType::TYPE_MESH);
-    ObjectData objData;
-    objData.mesh = m;
-    objData.material = tmtl;
-
-    objData.additionalData = vboV;
-    model.setData(&objData);
     mc.identity(model.getMatrix());
-    //mc.translate(model.getMatrix(), Vector3d(0,0,-10));
+    mc.translate(model.getMatrix(), Vector3d(0, 0, 0));
 
     scene.addChild(&model);
 
-    model2.setType(NodeType::TYPE_MESH);
-    model2.setData(&objData);
     mc.identity(model2.getMatrix());
-    mc.translate(model2.getMatrix(), Vector3d(0, -5, 0));
+    mc.translate(model2.getMatrix(), Vector3d(0, -5, -10));
 
     scene.addChild(&model2);
 
     model3.setType(NodeType::TYPE_MESH);
-    model3.setData(&objData);
+
     mc.identity(model3.getMatrix());
     mc.translate(model3.getMatrix(), Vector3d(4, 0, 0));
 
     model2.addChild(&model3);
 
+
+    rst.setRootNode(&scene);
     //vboMgr.addVbo("test", rdr.makeVbo(*m, *tmtl));
 
     system->eventLoop();

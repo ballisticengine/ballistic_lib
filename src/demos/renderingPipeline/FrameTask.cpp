@@ -18,16 +18,16 @@ FrameTask::FrameTask() {
 }
 
 void FrameTask::run(RenderingPipeline *p) {
-    using Ballistic::Rendering::Vbo::VboManager;
-    ModuleManager *mgr = ModuleManager::get();
-    VboManager *vboMgr = (VboManager *) mgr->getModule("vboManager");
-
-
-
-
-
-
-    p->getRenderer()->renderVbo(vboMgr->getVbo("test"), m);
+//    using Ballistic::Rendering::Vbo::VboManager;
+//    ModuleManager *mgr = ModuleManager::get();
+//    VboManager *vboMgr = (VboManager *) mgr->getModule("vboManager");
+//
+//
+//
+//
+//
+//
+//    p->getRenderer()->renderVbo(vboMgr->getVbo("test"), m);
 
 
 }

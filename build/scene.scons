@@ -1,0 +1,16 @@
+
+from site_scons import *
+
+src = '../src/scene/'
+
+modules = [
+    Glob(src + '*.cpp'),
+    Glob(src + 'rendering/*.cpp'),
+   
+]
+
+
+env = Environment(CPPPATH=CPPATH)
+
+
+env.Library('scene', modules, LIBS=ALL_LIBS+['core', 'rendering'],  LIBPATH='../bin', CXXFLAGS=COMMON_CXX_FLAGS, )

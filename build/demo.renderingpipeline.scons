@@ -9,5 +9,5 @@ modules = [
     Glob('../src/demos/renderingPipeline/*.cpp'),
 ]
 
-env.Program('./renderingpipeline', modules, LIBS=['loaders', 'io','rendering', 'core',]+ALL_LIBS
+env.Program('./renderingpipeline', modules, LIBS=['loaders', 'io','rendering', 'core', 'scene', ]+ALL_LIBS
     ,LIBPATH='../bin', CXXFLAGS=COMMON_CXX_FLAGS, )

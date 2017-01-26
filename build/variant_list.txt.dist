@@ -4,6 +4,8 @@ io.scons
 cli.scons
 loaders.scons
 rendering.scons
+scene.scons
+test.scons
 demo.sdlandpipeline.scons
 demo.sdlsystem.scons
 demo.renderingpipeline.scons

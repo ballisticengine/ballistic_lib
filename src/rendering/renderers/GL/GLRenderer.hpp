@@ -20,8 +20,8 @@ namespace Ballistic {
                 GLhandleARB setUpShader(std::string name, std::string vertText, std::string fragText);
                 std::map<Ballistic::Core::Types::Graphics::Texture *, GLuint> textureMap;
                 std::map<std::string, GLhandleARB> shaderMap;
-                
-                virtual void renderVbo(Ballistic::Rendering::Vbo::Vbo* vbo);
+
+
             public:
                 virtual void initialize();
                 virtual void destroy();
@@ -31,15 +31,13 @@ namespace Ballistic {
                 virtual Ballistic::Rendering::Vbo::Vbo *
                 makeVbo(const Ballistic::Core::Types::Graphics::Mesh &m,
                         Ballistic::Core::Types::Graphics::Materials::Material &mtl);
-                
-                virtual void setTransformMatrix(Ballistic::Core::Types::Spatial::Matrix4 *matrix);
-                
-                virtual void renderVbo(Ballistic::Rendering::Vbo::Vbo* vbo,
-                        Ballistic::Core::Types::Spatial::Matrix4 &matrix);
 
-                virtual void renderVbo(Ballistic::Rendering::Vbo::Vbo* vbo,
-                        Ballistic::Core::Types::Spatial::Vector3d & translation,
-                        Ballistic::Core::Types::Spatial::Vector3d &rotation);
+                virtual void setTransformMatrix(Ballistic::Core::Types::Spatial::Matrix4 *matrix);
+                virtual void concatMatrix(Ballistic::Core::Types::Spatial::Matrix4 *matrix);
+
+                virtual void renderVbo(Ballistic::Rendering::Vbo::Vbo* vbo);
+
+
 
                 virtual void setupTexture(Ballistic::Core::Types::Graphics::Texture *texture);
 

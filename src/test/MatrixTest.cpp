@@ -115,15 +115,15 @@ TEST(Matrix, MatrixMultiplyTest) {
     Matrix m1(2, 2), m2(2, 2), m3(2, 2);
 
     scalar_t a[4] = {1.0f, 2.0f, 3.0f, 4.0f},
-            b[4] = {5.0f, 6.0f, 7.0f, 8.0f}
-            ;
-    
+    b[4] = {5.0f, 6.0f, 7.0f, 8.0f}
+    ;
+
     m1.set(a);
     m2.set(b);
-    
+
     mc.multiply(&m3, &m1, &m2);
-    
-    
+
+
     ASSERT_EQ(m3.get(0, 0), 19.0f);
     ASSERT_EQ(m3.get(0, 1), 22.0f);
     ASSERT_EQ(m3.get(1, 0), 43.0f);
@@ -133,32 +133,32 @@ TEST(Matrix, MatrixMultiplyTest) {
 
 TEST(Matrix, TranslationTest) {
     MatrixCalculator mc;
-    
-    Vector3d tv(10,20,30);
-    Matrix m1(4,4);
-    
+
+    Vector3d tv(10, 20, 30);
+    Matrix m1(4, 4);
+
     mc.identity(&m1);
-    
+
     mc.translate(&m1, tv);
-    
-    
-    ASSERT_EQ(m1.get(0,0), 1);
-    ASSERT_EQ(m1.get(0,1), 0);
-    ASSERT_EQ(m1.get(0,2), 0);
-    ASSERT_EQ(m1.get(0,3), 10);
-    
-    ASSERT_EQ(m1.get(1,0), 0);
-    ASSERT_EQ(m1.get(1,1), 1);
-    ASSERT_EQ(m1.get(1,2), 0);
-    ASSERT_EQ(m1.get(1,3), 20);
-    
-    ASSERT_EQ(m1.get(2,0), 0);
-    ASSERT_EQ(m1.get(2,1), 0);
-    ASSERT_EQ(m1.get(2,2), 1);
-    ASSERT_EQ(m1.get(2,3), 30);
-    
-    ASSERT_EQ(m1.get(3,0), 0);
-    ASSERT_EQ(m1.get(3,1), 0);
-    ASSERT_EQ(m1.get(3,2), 0);
-    ASSERT_EQ(m1.get(3,3), 1);
+
+
+    ASSERT_EQ(m1.get(0, 0), 1);
+    ASSERT_EQ(m1.get(1, 0), 0);
+    ASSERT_EQ(m1.get(2, 0), 0);
+    ASSERT_EQ(m1.get(3, 0), 10);
+
+    ASSERT_EQ(m1.get(0, 1), 0);
+    ASSERT_EQ(m1.get(1, 1), 1);
+    ASSERT_EQ(m1.get(2, 1), 0);
+    ASSERT_EQ(m1.get(3, 1), 20);
+
+    ASSERT_EQ(m1.get(0, 2), 0);
+    ASSERT_EQ(m1.get(1, 2), 0);
+    ASSERT_EQ(m1.get(2, 2), 1);
+    ASSERT_EQ(m1.get(3, 2), 30);
+
+    ASSERT_EQ(m1.get(0, 3), 0);
+    ASSERT_EQ(m1.get(1, 3), 0);
+    ASSERT_EQ(m1.get(2, 3), 0);
+    ASSERT_EQ(m1.get(3, 3), 1);
 }

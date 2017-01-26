@@ -1,12 +1,12 @@
 #ifndef NODE_HPP
 #define NODE_HPP
 
-#include "../types/spatial/Vector3d.hpp"
-#include "../types/spatial/Matrix.hpp"
+#include "../core/types/spatial/Vector3d.hpp"
+#include "../core/types/spatial/Matrix.hpp"
+#include "../rendering/renderers/RendererInterface.hpp"
 #include <vector>
 
 namespace Ballistic {
-    namespace Core {
         namespace Scene {
 
             //TODO: Transform node should lead to actual typed node, 
@@ -27,8 +27,10 @@ namespace Ballistic {
             
             class Node { 
             protected:
-                //TODO:
-                // include rotation and translation vectors synced with matrix
+                /*
+                 * TODO:
+                     include rotation and translation vectors synced with matrix
+                 */
                 Ballistic::Core::Types::Spatial::Matrix4 matrix;
                 std::vector<Node *> children;
                 Node *parent;
@@ -38,20 +40,17 @@ namespace Ballistic {
             public:
       
                 virtual void setType(NodeType type);
-                virtual void setParent(Node *parent);
+                //virtual void setParent(Node *parent);
                 virtual void addChild(Node *child);
                 virtual Ballistic::Core::Types::Spatial::Matrix4 * getMatrix();
                 virtual NodeType getType();
                 virtual  std::vector<Node *> & getChildren();
                 virtual Node * getParent();
-                virtual void *getData();
-                virtual void setData(void *data);
+                virtual void draw(Ballistic::Rendering::Renderers::RendererInterface *renderer)=0;
                 
-                void *rendererData;
             };
 
         }
-    }
 }
 
 #endif 

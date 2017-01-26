@@ -15,7 +15,7 @@ using namespace std;
 namespace Ballistic {
     namespace Rendering {
         namespace Renderers {
-            
+
             void GLRenderer::initialize() {
                 this->resize(800, 600);
                 glewInit();
@@ -100,9 +100,9 @@ namespace Ballistic {
                 glClearColor(0, 0, 0, 1);
                 glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
                 glMatrixMode(GL_MODELVIEW);
-//                glLoadIdentity();
-//                glTranslatef(0,0,-10);
-                
+                                glLoadIdentity();
+                //                glTranslatef(0,0,-10);
+
             }
 
             void GLRenderer::end() {
@@ -111,12 +111,12 @@ namespace Ballistic {
 
             }
 
-            Ballistic::Rendering::Vbo::Vbo  
-            * GLRenderer::makeVbo(const Ballistic::Core::Types::Graphics::Mesh &m, 
+            Ballistic::Rendering::Vbo::Vbo
+            * GLRenderer::makeVbo(const Ballistic::Core::Types::Graphics::Mesh &m,
                     Ballistic::Core::Types::Graphics::Materials::Material &mtl) {
 
                 using Ballistic::Rendering::Vbo::Vbo;
-                
+
                 GLfloat *tmpVerts = new GLfloat[m.n_vertices * 3];
                 GLfloat *tmpNorms = new GLfloat[m.n_vertices * 3];
 
@@ -231,10 +231,10 @@ namespace Ballistic {
                 return vbo;
 
             }
-            
+
             void GLRenderer::renderVbo(Ballistic::Rendering::Vbo::Vbo* vbo) {
                 using Ballistic::Core::Types::Graphics::Mesh;
-                
+
                 GLVbo *glVbo = (GLVbo *) vbo->rendererData;
                 const Mesh *m = vbo->mesh;
 
@@ -262,23 +262,14 @@ namespace Ballistic {
             }
 
             void GLRenderer::setTransformMatrix(Ballistic::Core::Types::Spatial::Matrix4 *matrix) {
-                  glLoadMatrixf(matrix->get());
-            }
-            
-            void GLRenderer::renderVbo(Ballistic::Rendering::Vbo::Vbo * vbo, Ballistic::Core::Types::Spatial::Matrix4 &matrix) {
-
-                glMultMatrixf(matrix.get());
-                this->renderVbo(vbo);
-
+                glLoadMatrixf(matrix->get());
             }
 
-             void GLRenderer::renderVbo(Ballistic::Rendering::Vbo::Vbo* vbo,
-                        Ballistic::Core::Types::Spatial::Vector3d & translation,
-                        Ballistic::Core::Types::Spatial::Vector3d &rotation) 
-             {
-                  this->renderVbo(vbo);
-             }
+            void GLRenderer::concatMatrix(Ballistic::Core::Types::Spatial::Matrix4 *matrix) {
+                glMultMatrixf(matrix->get());
+            }
             
+
             void GLRenderer::setupTexture(Ballistic::Core::Types::Graphics::Texture *texture) {
                 GLuint texId;
                 glGenTextures(1, &texId);
