@@ -20,6 +20,8 @@ modules = [
     Glob(src + 'resources/exceptions/*.cpp'),
     Glob(src + 'pluginLoad/*.cpp'),
     Glob(src + 'helpers/*.cpp'),
+    Glob(src + 'calc/*.cpp'),
+    Glob(src + 'scene/*.cpp'),
 ]
 
 env = Environment(CPPPATH=CPPATH)

@@ -10,13 +10,12 @@
 using namespace std;
 #define BUFFER_OFFSET(i) ((void*)(i))
 
-
 //http://stackoverflow.com/questions/15548776/rendering-engine-design-abstracting-away-api-specific-code-for-resources
 // http://www.songho.ca/opengl/gl_vbo.html
 namespace Ballistic {
     namespace Rendering {
         namespace Renderers {
-
+            
             void GLRenderer::initialize() {
                 this->resize(800, 600);
                 glewInit();
@@ -48,19 +47,16 @@ namespace Ballistic {
 
             }
 
-            void GLRenderer::setUpShaders() {
+            GLhandleARB GLRenderer::setUpShader(std::string name, std::string vertText, std::string fragText) {
                 GLhandleARB
                 vhandle = glCreateShaderObjectARB(GL_VERTEX_SHADER_ARB),
                         fhandle = glCreateShaderObjectARB(GL_FRAGMENT_SHADER_ARB);
 
                 const char
-                *vtext = GLSL_GENERIC_VERT,
-                        *ftext = GLSL_GENERIC_FRAG;
+                *vtext = vertText.c_str(),
+                        *ftext = fragText.c_str();
                 glShaderSourceARB(vhandle, 1, &vtext, 0);
                 glShaderSourceARB(fhandle, 1, &ftext, 0);
-
-                //                delete vtext;
-                //                delete ftext;
 
                 glCompileShaderARB(vhandle);
                 glCompileShaderARB(fhandle);
@@ -84,7 +80,14 @@ namespace Ballistic {
                 cout << "Status:" << vcompiled << ", " << fcompiled <<
                         ", " << linked << endl;
 
-                glUseProgram(p);
+                this->shaderMap[name] = p;
+
+                return p;
+            }
+
+            void GLRenderer::setUpShaders() {
+                this->setUpShader("generic", GLSL_GENERIC_VERT, GLSL_GENERIC_FRAG);
+                glUseProgram(this->shaderMap["generic"]);
 
             }
 
@@ -97,12 +100,9 @@ namespace Ballistic {
                 glClearColor(0, 0, 0, 1);
                 glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
                 glMatrixMode(GL_MODELVIEW);
-                glLoadIdentity();
-                glTranslatef(0, 0, -5);
-
-                //glPointSize(1);
-
-                //glColor4f(1, 0, 0, 1);
+//                glLoadIdentity();
+//                glTranslatef(0,0,-10);
+                
             }
 
             void GLRenderer::end() {
@@ -111,8 +111,12 @@ namespace Ballistic {
 
             }
 
-            Vbo *GLRenderer::makeVbo(const Mesh &m, Material &mtl) {
+            Ballistic::Rendering::Vbo::Vbo  
+            * GLRenderer::makeVbo(const Ballistic::Core::Types::Graphics::Mesh &m, 
+                    Ballistic::Core::Types::Graphics::Materials::Material &mtl) {
 
+                using Ballistic::Rendering::Vbo::Vbo;
+                
                 GLfloat *tmpVerts = new GLfloat[m.n_vertices * 3];
                 GLfloat *tmpNorms = new GLfloat[m.n_vertices * 3];
 
@@ -227,9 +231,10 @@ namespace Ballistic {
                 return vbo;
 
             }
-
-            void GLRenderer::renderVbo(Vbo* vbo) {
-
+            
+            void GLRenderer::renderVbo(Ballistic::Rendering::Vbo::Vbo* vbo) {
+                using Ballistic::Core::Types::Graphics::Mesh;
+                
                 GLVbo *glVbo = (GLVbo *) vbo->rendererData;
                 const Mesh *m = vbo->mesh;
 
@@ -254,9 +259,26 @@ namespace Ballistic {
                 glDisableClientState(GL_VERTEX_ARRAY);
                 glDisableClientState(GL_NORMAL_ARRAY);
                 glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+            }
+
+            void GLRenderer::setTransformMatrix(Ballistic::Core::Types::Spatial::Matrix4 *matrix) {
+                  glLoadMatrixf(matrix->get());
+            }
+            
+            void GLRenderer::renderVbo(Ballistic::Rendering::Vbo::Vbo * vbo, Ballistic::Core::Types::Spatial::Matrix4 &matrix) {
+
+                glMultMatrixf(matrix.get());
+                this->renderVbo(vbo);
 
             }
 
+             void GLRenderer::renderVbo(Ballistic::Rendering::Vbo::Vbo* vbo,
+                        Ballistic::Core::Types::Spatial::Vector3d & translation,
+                        Ballistic::Core::Types::Spatial::Vector3d &rotation) 
+             {
+                  this->renderVbo(vbo);
+             }
+            
             void GLRenderer::setupTexture(Ballistic::Core::Types::Graphics::Texture *texture) {
                 GLuint texId;
                 glGenTextures(1, &texId);

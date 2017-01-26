@@ -8,6 +8,7 @@
 #include "../../rendering/renderers/GL/GLRenderer.hpp"
 #include "../../rendering/renderingPipeline/Tasks/BeginFrameTask.hpp"
 #include "../../rendering/renderingPipeline/Tasks/EndFrameTask.hpp"
+#include "../../rendering/renderingPipeline/Tasks/RenderSceneTask.hpp"
 #include "types/graphics/materials/Material.hpp"
 #include "types/graphics/materials/SimpleColorMaterial.hpp"
 #include "types/graphics/materials/TextureMaterial.hpp"
@@ -23,6 +24,9 @@
 #include "../../loaders/LoaderXML.hpp"
 #include "../../loaders/TextureLoader.hpp"
 #include "../../core/resources/loader/Results.hpp"
+#include "../../core/scene/Node.hpp"
+#include "../../core/scene/ObjectNode.hpp"
+#include "../../core/calc/MatrixCalculator.hpp"
 
 using namespace std;
 using namespace Ballistic::Core::Modules;
@@ -37,20 +41,22 @@ using Ballistic::Core::Types::Graphics::Color;
 using namespace Ballistic::Core::Resources;
 using namespace Ballistic::Core::Resources::Storage;
 using namespace Ballistic::Loaders;
+using namespace Ballistic::Core::Scene;
+using namespace Ballistic::Core::Calc;
 
 int main() {
-      FilesystemStorageHandler fs;
+    FilesystemStorageHandler fs;
     fs.setWD("../src/test/data");
     ResourceManager resMan(&fs);
-    
+
     LoaderXML loaderXML;
     TextureLoader textureLoader;
-    
+
     resMan.getLoader().registerStaticPlugin("loaderXML", &loaderXML);
     resMan.getLoader().registerStaticPlugin("textureLoader", &textureLoader);
-    
+
     ModuleManager *mgr = ModuleManager::get();
-    
+
     SDLIoDriver *io = new SDLIoDriver();
 
     System *system = new System(io, mgr->getDispatcher());
@@ -60,10 +66,18 @@ int main() {
 
     Ballistic::Rendering::Pipeline::BeginFrameTask bft;
     Ballistic::Rendering::Pipeline::EndFrameTask eft;
+    Ballistic::Rendering::Pipeline::RenderSceneTask rst;
+
+    MatrixCalculator mc;
+
+
+
+
     FrameTask ft;
 
     rpl.addTask("begin", &bft);
-    rpl.addTask("frame", &ft);
+    rpl.addTask("sg", &rst);
+    // rpl.addTask("frame", &ft);
     rpl.addTask("end", &eft);
 
 
@@ -71,7 +85,7 @@ int main() {
     mgr->addModule("rendering", &rpl);
     mgr->addModule("vboManager", &vboMgr);
     mgr->addModule("resourceManager", &resMan);
-    
+
     EventListener *el = new EventListener();
     TickListener *tl = new TickListener();
 
@@ -81,20 +95,60 @@ int main() {
 
 
     //SimpleColorMaterial mtl(Color(0,1,0,1));
-    
+
     mgr->initialize("system");
     mgr->initialize("rendering");
 
     ResourceHandle rH = resMan.get("untitled.xml", "meshAndMaterial");
-    MeshAndMaterialResult *res = (MeshAndMaterialResult *)rH.getData();
+    MeshAndMaterialResult *res = (MeshAndMaterialResult *) rH.getData();
     Mesh *m = res->mesh;
     Material *mtl = res->material;
-    TextureMaterial *tmtl = (TextureMaterial *)mtl->getMaterialData();
-    
+    TextureMaterial *tmtl = (TextureMaterial *) mtl->getMaterialData();
     ResourceHandle tH = resMan.get("tex.gif", "texture");
-     //rdr.setupTexture(tmtl->getTexture());
-    rdr.setupTexture((Texture *)tH.getData());
-    vboMgr.addVbo("test", rdr.makeVbo(*m, *tmtl));
+    //rdr.setupTexture(tmtl->getTexture());
+    rdr.setupTexture((Texture *) tH.getData());
+
+    Node scene;
+    scene.setType(NodeType::TYPE_SCENE);
+
+    mc.identity(scene.getMatrix());
+
+    mc.translate(scene.getMatrix(), Vector3d(0, 0, -10));
+
+    rst.setRootNode(&scene);
+
+    Ballistic::Rendering::Vbo::Vbo *vboV = rdr.makeVbo(*m, *tmtl);
+
+    Node model, model2, model3;
+
+    model.setType(NodeType::TYPE_MESH);
+    ObjectData objData;
+    objData.mesh = m;
+    objData.material = tmtl;
+
+    objData.additionalData = vboV;
+    model.setData(&objData);
+    mc.identity(model.getMatrix());
+    //mc.translate(model.getMatrix(), Vector3d(0,0,-10));
+
+    scene.addChild(&model);
+
+    model2.setType(NodeType::TYPE_MESH);
+    model2.setData(&objData);
+    mc.identity(model2.getMatrix());
+    mc.translate(model2.getMatrix(), Vector3d(0, -5, 0));
+
+    scene.addChild(&model2);
+
+    model3.setType(NodeType::TYPE_MESH);
+    model3.setData(&objData);
+    mc.identity(model3.getMatrix());
+    mc.translate(model3.getMatrix(), Vector3d(4, 0, 0));
+
+    model2.addChild(&model3);
+
+    //vboMgr.addVbo("test", rdr.makeVbo(*m, *tmtl));
+
     system->eventLoop();
     mgr->destroy();
 

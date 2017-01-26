@@ -13,10 +13,6 @@ namespace Ballistic {
                 
             }
             
-            
-
-          
-            
             void App::registerCommand(Command *command) {
                 command->setup();
                 if(!command->getOutput()) {
@@ -35,12 +31,10 @@ namespace Ballistic {
                 Command *command = this->commands[commandName];
                 
                 if(!command) {
-                    this->output->write("No command"+commandName+" registered.\n");
+                    this->output->write("No command "+commandName+" registered.\n");
                     //cout << "No command " + commandName + " registered." << endl; 
                     return 2;
                 }
-                
-                command->execute();
                 
                 return command->execute();
             }

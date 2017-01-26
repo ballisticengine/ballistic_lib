@@ -12,7 +12,7 @@ void EventListener::processEvent(void *e) {
             this->system->shutdown();
             break;
         case IoEventType::IOEVENT_KEYUP:
-            cout << "UP" << endl;
+            cout << "UP " << ioe->keyData.keycode << endl;
             break;
     }
 }

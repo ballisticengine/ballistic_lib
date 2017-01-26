@@ -4,7 +4,7 @@
 namespace Ballistic {
     namespace CLI {
 
-        AppParams::AppParams(size_t count, char **params) {
+        AppParams::AppParams(int count, char **params) {
 
             this->execName = params[0];
 

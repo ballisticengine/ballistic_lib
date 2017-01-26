@@ -1,0 +1,9 @@
+from site_scons import *
+COREPATH = '../core'
+env = Environment(CPPPATH=CPPATH+['../src/demos', COREPATH ])
+
+modules = [
+    Glob('../src/demos/cli/*.cpp'),
+]
+
+env.Program('./cli', modules, LIBS=['core','cli'], LIBPATH='../bin', CXXFLAGS=COMMON_CXX_FLAGS, )

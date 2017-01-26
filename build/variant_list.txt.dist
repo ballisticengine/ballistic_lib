@@ -1,6 +1,5 @@
 core.scons
 test.scons
-scene.scons
 io.scons
 cli.scons
 loaders.scons

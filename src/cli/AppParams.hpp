@@ -13,7 +13,7 @@ namespace Ballistic {
             std::string execName;
             std::vector<std::string> params;
         public:
-            AppParams(size_t count, char**params);
+            AppParams(int count, char**params);
             AppParams(std::string execName, std::vector<std::string>params);
             virtual std::string getExecName();
             virtual size_t count();

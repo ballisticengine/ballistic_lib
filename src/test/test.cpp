@@ -9,6 +9,7 @@
 #include "SceneTest.cpp"
 #include "CliTest.cpp"
 #include "ResourceTest.cpp"
+#include "MatrixTest.cpp"
 
 int main(int argc, char **argv) {
     ::testing::InitGoogleTest(&argc, argv);
