@@ -1,5 +1,10 @@
 #include "MatrixCalculator.hpp"
 
+#include <cmath>
+
+using std::cos;
+using std::sin;
+
 namespace Ballistic {
     namespace Core {
         namespace Calc {
@@ -12,16 +17,14 @@ namespace Ballistic {
 
             void MatrixCalculator::translate(Matrix *m, Vector3d vector) {
                 ///https://www.gamedev.net/topic/335211-glloadmatrix-doesnt-work/
-                //OpenGL is column-major, is it possible you're trying to use row-major? Just a guess... 
-                //Thats exactly it. 
-                // TODO: convert to col-major.
+                
                 Matrix tm(m->cols, m->rows);
                 this->identity(&tm);
                 tm.set(3, 0, vector.x);
                 tm.set(3, 1, vector.y);
-                tm.set(3,2, vector.z);
-                tm.set(3,3, 1);
-                
+                tm.set(3, 2, vector.z);
+                tm.set(3, 3, 1);
+
                 this->multiply(m, m, &tm);
 
             }
@@ -39,6 +42,25 @@ namespace Ballistic {
 
                 *target = m;
 
+            }
+
+            void MatrixCalculator::rotateX(Matrix *target, scalar_t angle) {
+
+                scalar_t cosValue, sinValue;
+
+                cosValue = cos(angle);
+                sinValue = sin(angle);
+
+                Matrix m(target->cols, target->rows);
+                this->identity(&m);
+
+                m.set(1, 1, cosValue);
+                m.set(2, 1, sinValue);
+                
+                m.set(1, 2, -sinValue);
+                m.set(2, 2, cosValue);
+                
+                this->multiply(target, target, &m);
             }
         }
     }

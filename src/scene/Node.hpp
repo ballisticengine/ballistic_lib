@@ -9,14 +9,7 @@
 namespace Ballistic {
         namespace Scene {
 
-            //TODO: Transform node should lead to actual typed node, 
-            // typed node (like mesh) should transform
-            // so typed node = leaf
-            // node should be more general
-            // leaf, transform, etc should be child classes
-            /*
-             OR pass renderer interface to node and make virtual draw function
-             */
+           
             
             enum class NodeType {
                 TYPE_TRANSFORM,

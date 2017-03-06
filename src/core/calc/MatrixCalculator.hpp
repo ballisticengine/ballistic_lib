@@ -14,7 +14,9 @@ namespace Ballistic {
             public:
                 virtual void identity(Matrix *m);
                 virtual void translate(Matrix *m, Vector3d vector);
+                virtual void rotateX(Matrix *target, scalar_t angle);
                 virtual void multiply(Matrix *target, Matrix *a, Matrix *b);
+                
 
             };
         }
