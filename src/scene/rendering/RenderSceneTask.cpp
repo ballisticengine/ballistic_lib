@@ -13,8 +13,8 @@ namespace Ballistic {
             node->draw(p->getRenderer());
             
             vector<Node *>children = node->getChildren();
-            //TODO: always set matrix in node
-            //http://gameprogrammingpatterns.com/dirty-flag.html
+       
+            
             for (auto i : children) {
                 renderNode(p, i);
                 //p->getRenderer()->setTransformMatrix(node->getMatrix());

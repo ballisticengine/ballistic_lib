@@ -94,9 +94,6 @@ int main() {
     mgr->getDispatcher()->addListener("ioEvent", el);
     mgr->getDispatcher()->addListener("ioTick", tl);
 
-
-    //SimpleColorMaterial mtl(Color(0,1,0,1));
-
     mgr->initialize("system");
     mgr->initialize("rendering");
 
@@ -106,40 +103,29 @@ int main() {
     Material *mtl = res->material;
     TextureMaterial *tmtl = (TextureMaterial *) mtl->getMaterialData();
     ResourceHandle tH = resMan.get("tex.gif", "texture");
-    //rdr.setupTexture(tmtl->getTexture());
+    
     rdr.setupTexture((Texture *) tH.getData());
 
     TransformNode scene;
+    
+    
+    scene.translate(Vector3d(0,0,-10));
 
-    mc.identity(scene.getMatrix());
-
-    mc.translate(scene.getMatrix(), Vector3d(0, 0, -10));
 
     Ballistic::Rendering::Vbo::Vbo *vboV = rdr.makeVbo(*m, *tmtl);
 
     MeshNode model(m, tmtl, vboV), model2(m, tmtl, vboV), model3(m, tmtl, vboV);
-
-    mc.identity(model.getMatrix());
-    mc.translate(model.getMatrix(), Vector3d(0, 0, 0));
-
+    model.translate(Vector3d(0,0,0));
     scene.addChild(&model);
-
-    mc.identity(model2.getMatrix());
-    mc.translate(model2.getMatrix(), Vector3d(0, -5, -10));
-
+    model2.translate(Vector3d(0,-5,-10));
     scene.addChild(&model2);
-
-    model3.setType(NodeType::TYPE_MESH);
-
-    mc.identity(model3.getMatrix());
-    mc.translate(model3.getMatrix(), Vector3d(4, 0, 0));
-
+    model3.translate(Vector3d(4,0,0));
     model2.addChild(&model3);
 
-
     rst.setRootNode(&scene);
-    //vboMgr.addVbo("test", rdr.makeVbo(*m, *tmtl));
-
+    
+    scene.updateChildren();
+    
     system->eventLoop();
     mgr->destroy();
 

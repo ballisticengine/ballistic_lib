@@ -9,7 +9,7 @@ namespace Ballistic {
     namespace Scene {
 
         MeshNode::MeshNode(Mesh *mesh, Material *material, Vbo *vbo)
-        : mesh(mesh), material(material), vbo(vbo) {
+        : Node(), mesh(mesh), material(material), vbo(vbo) {
 
         }
 
@@ -27,7 +27,7 @@ namespace Ballistic {
         
         
         void MeshNode::draw(Ballistic::Rendering::Renderers::RendererInterface *renderer) {
-            renderer->concatMatrix(&this->matrix);
+            renderer->setTransformMatrix(&this->matrix);
             renderer->renderVbo(this->vbo);
         }
     }
