@@ -1,6 +1,6 @@
 #include "ResourceManager.hpp"
 #include "../resources/loader/Results.hpp"
-#include <iostream>
+
 
 namespace Ballistic {
     namespace Core {
@@ -44,17 +44,12 @@ namespace Ballistic {
             }
 
             void ResourceManager::resolveDependencies(Loader *loader) {
-                using namespace std;
-                cout << "DEPSOLVE" << endl;
                 dependencyVector dependencies = loader->getDependencies();
                 for (size_t i = 0; i < dependencies.size(); i++) {
                     
                     ResourceHandle handle = this->get(dependencies[i].resourceId, dependencies[i].type);
                     *dependencies[i].target = handle.getData();
-                    cout << "ResId " << 
-                            dependencies[i].resourceId << ", " << 
-                            dependencies[i].type << ", " << handle.getData() 
-                            << endl;
+                
                 }
                 loader->cleanDependencies();
             }
