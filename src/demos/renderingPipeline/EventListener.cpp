@@ -19,17 +19,19 @@ void EventListener::processKey(IoEvent *ioe) {
         case 's':
             z = 1;
             break;
-            
+
         case 'a':
-            x=10;
+            x = -1;
             break;
-         
+
+        case 'd':
+            x = 1;
+            break;
+
     }
 
-    cout << "x: " << x << "|y:" << y << "|z:" << z << endl;
-    //this->rootNode->translate(0, 0, z);
-    this->rootNode->updateChildren();
-    cout << this->rootNode->getTranslation().z << endl;
+    this->rootNode->translate(x, y, z);
+    this->rootNode->update();    
 }
 
 void EventListener::processEvent(void *e) {

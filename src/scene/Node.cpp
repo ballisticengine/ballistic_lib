@@ -8,6 +8,7 @@ namespace Ballistic {
         Node::Node() {
             this->matrixCalculator.identity(this->getMatrix());
             this->matrixCalculator.identity(&this->localMatrix);
+            this->matrixCalculator.identity(&this->originMatrix);
             this->dirty = true;
         }
 
@@ -33,35 +34,17 @@ namespace Ballistic {
             return this->getChildren().size() > 0;
         }
 
-        void Node::updateChildren() {
-            this->dirty=false;
-            std::vector<Node *> children = this->getChildren();
+        void Node::update() {
             using Ballistic::Core::Types::Spatial::Matrix4;
+            this->matrixCalculator.multiply(&this->matrix, &this->originMatrix, &this->localMatrix);
+            std::vector<Node *> children = this->getChildren();
             for (auto c : children) {
-               
-                    Matrix4 *m = c->getMatrix();
-                    Matrix4 tmpm;
-                    tmpm = *m;
-
-                    
-                    /* error:
-                     * it's multipled by parent matrix everytime, even its already multipled
-                     * so its accumulating
-                     * solution:
-                     * add local and origin matrices to nodes and multiply it to matrix here
-                     * and then each node would update itself where
-                     * matrix = origin * local
-                     */
-                    
-                    this->matrixCalculator.multiply(&tmpm, m, &this->matrix);
-                    
-                    *m = tmpm;
-                    
-                    c->updateChildren();
-                
+                c->originMatrix = this->matrix;
+                c->update();
             }
-
         }
+
+       
 
         Node * Node::getParent() {
             return this->parent;
@@ -73,8 +56,8 @@ namespace Ballistic {
 
         void Node::translate(Ballistic::Core::Types::Spatial::Vector3d translation) {
             this->translation = this->translation + translation;
-            this->matrixCalculator.translate(&this->matrix, translation);
-            this->dirty=true;
+            this->matrixCalculator.translate(&this->localMatrix, translation);
+            this->dirty = true;
 
         }
 

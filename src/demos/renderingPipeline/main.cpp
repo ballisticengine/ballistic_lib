@@ -117,7 +117,7 @@ int main() {
 
     rst.setRootNode(&scene);
 
-    scene.updateChildren();
+    scene.update();
     
 
     EventListener *el = new EventListener(&scene);

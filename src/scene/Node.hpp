@@ -45,8 +45,8 @@ namespace Ballistic {
                 virtual void translate(Ballistic::Core::Types::Spatial::Vector3d  translation);
                 virtual Ballistic::Core::Types::Spatial::Vector3d & getTranslation();
                 
+                virtual void update();
                 
-                virtual void updateChildren();
                 virtual Ballistic::Core::Types::Spatial::Matrix4  *getMatrix();
                 //virtual void setOriginMatrix(Ballistic::Core::Types::Spatial::Matrix4 origin);
                 
