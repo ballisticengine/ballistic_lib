@@ -20,8 +20,6 @@ namespace Ballistic {
             Ballistic::Core::Types::Spatial::Matrix4 identityMatrix;
         public:
             virtual void setRootNode(Node *node);
-            RenderSceneTask();
-
         };
     }
 

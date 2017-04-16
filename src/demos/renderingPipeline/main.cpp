@@ -114,7 +114,7 @@ int main() {
     scene.addChild(&model2);
     model3.translate(Vector3d(4, 0, 0));
     model2.addChild(&model3);
-
+    
     rst.setRootNode(&scene);
 
     scene.update();
