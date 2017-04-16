@@ -50,6 +50,7 @@ namespace Ballistic {
                 virtual Ballistic::Core::Types::Spatial::Matrix4  *getMatrix();
                 //virtual void setOriginMatrix(Ballistic::Core::Types::Spatial::Matrix4 origin);
                 
+                //TODO set origin matrix and/or translate origin
                 
                 virtual NodeType getType();
                 virtual  std::vector<Node *> & getChildren();
