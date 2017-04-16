@@ -15,8 +15,6 @@
 #include "types/graphics/Color.hpp"
 #include "EventListener.hpp"
 #include "TickListener.hpp"
-#include "../../rendering/VBO/VboManager.hpp"
-#include "FrameTask.hpp"
 
 #include "../../core/resources/ResourceManager.hpp"
 #include "../../core/resources/ResourceHandle.hpp"
@@ -36,7 +34,6 @@ using Ballistic::Core::Types::Graphics::Mesh;
 using Ballistic::Core::Types::Graphics::Triangle;
 using Ballistic::Core::Types::Graphics::Texture;
 using Ballistic::Core::Types::Spatial::Vector3d;
-using Ballistic::Rendering::Vbo::VboManager;
 using namespace Ballistic::Core::Types::Graphics::Materials;
 using Ballistic::Core::Types::Graphics::Color;
 using namespace Ballistic::Core::Resources;
@@ -63,7 +60,7 @@ int main() {
     System *system = new System(io, mgr->getDispatcher());
     Ballistic::Rendering::Renderers::GLRenderer rdr;
     Ballistic::Rendering::Pipeline::RenderingPipeline rpl(&rdr);
-    VboManager vboMgr;
+//    VboManager vboMgr;
 
     Ballistic::Rendering::Pipeline::BeginFrameTask bft;
     Ballistic::Rendering::Pipeline::EndFrameTask eft;
@@ -71,17 +68,15 @@ int main() {
 
     MatrixCalculator mc;
 
-    FrameTask ft;
 
     rpl.addTask("begin", &bft);
     rpl.addTask("sg", &rst);
-    // rpl.addTask("frame", &ft);
+
     rpl.addTask("end", &eft);
 
 
     mgr->addModule("system", system);
     mgr->addModule("rendering", &rpl);
-    mgr->addModule("vboManager", &vboMgr);
     mgr->addModule("resourceManager", &resMan);
 
 
