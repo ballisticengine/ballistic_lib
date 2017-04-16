@@ -24,8 +24,8 @@ namespace Ballistic {
                         Ballistic::Core::Types::Graphics::Materials::Material &mtl) = 0;
                 
                 virtual void setTransformMatrix(Ballistic::Core::Types::Spatial::Matrix4 *matrix)=0;
-                virtual void concatMatrix(Ballistic::Core::Types::Spatial::Matrix4 *matrix)=0;
-                //TODO: maybe also multmatrix
+    
+                
                 //TODO: rename Vbo to Renderable
                 
                 

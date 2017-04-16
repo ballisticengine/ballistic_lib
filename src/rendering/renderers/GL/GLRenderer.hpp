@@ -33,7 +33,6 @@ namespace Ballistic {
                         Ballistic::Core::Types::Graphics::Materials::Material &mtl);
 
                 virtual void setTransformMatrix(Ballistic::Core::Types::Spatial::Matrix4 *matrix);
-                virtual void concatMatrix(Ballistic::Core::Types::Spatial::Matrix4 *matrix);
 
                 virtual void renderVbo(Ballistic::Rendering::Vbo::Vbo* vbo);
 

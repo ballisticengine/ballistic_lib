@@ -4,6 +4,11 @@
 #include "../types/spatial/Matrix.hpp"
 #include "../types/spatial/Vector3d.hpp"
 
+
+/*
+ TODO: 
+ * maybe make it into matrix factory and simplify matrix class (or make it array)
+ */
 namespace Ballistic {
     namespace Core {
         namespace Calc {

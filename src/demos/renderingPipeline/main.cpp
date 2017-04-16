@@ -71,9 +71,6 @@ int main() {
 
     MatrixCalculator mc;
 
-
-
-
     FrameTask ft;
 
     rpl.addTask("begin", &bft);
@@ -87,12 +84,7 @@ int main() {
     mgr->addModule("vboManager", &vboMgr);
     mgr->addModule("resourceManager", &resMan);
 
-    EventListener *el = new EventListener();
-    TickListener *tl = new TickListener();
 
-
-    mgr->getDispatcher()->addListener("ioEvent", el);
-    mgr->getDispatcher()->addListener("ioTick", tl);
 
     mgr->initialize("system");
     mgr->initialize("rendering");
@@ -103,29 +95,38 @@ int main() {
     Material *mtl = res->material;
     TextureMaterial *tmtl = (TextureMaterial *) mtl->getMaterialData();
     ResourceHandle tH = resMan.get("tex.gif", "texture");
-    
+
     rdr.setupTexture((Texture *) tH.getData());
 
-    TransformNode scene;
+    TransformNode scene, identityNode;
+
+
     
-    
-    scene.translate(Vector3d(0,0,-10));
+    scene.translate(Vector3d(0, 0, -10));
 
 
     Ballistic::Rendering::Vbo::Vbo *vboV = rdr.makeVbo(*m, *tmtl);
 
     MeshNode model(m, tmtl, vboV), model2(m, tmtl, vboV), model3(m, tmtl, vboV);
-    model.translate(Vector3d(0,0,0));
+    model.translate(Vector3d(0, 0, 0));
     scene.addChild(&model);
-    model2.translate(Vector3d(0,-5,-10));
+    model2.translate(Vector3d(0, -5, -10));
     scene.addChild(&model2);
-    model3.translate(Vector3d(4,0,0));
+    model3.translate(Vector3d(4, 0, 0));
     model2.addChild(&model3);
 
     rst.setRootNode(&scene);
-    
+
     scene.updateChildren();
     
+
+    EventListener *el = new EventListener(&scene);
+    TickListener *tl = new TickListener();
+
+
+    mgr->getDispatcher()->addListener("ioEvent", el);
+    mgr->getDispatcher()->addListener("ioTick", tl);
+
     system->eventLoop();
     mgr->destroy();
 
