@@ -8,6 +8,7 @@
 /*
  TODO: 
  * maybe make it into matrix factory and simplify matrix class (or make it array)
+ * or NOT - calculator might be CPU for GL/DX or GPU one, its not related
  */
 namespace Ballistic {
     namespace Core {
