@@ -8,5 +8,5 @@ scene.scons
 test.scons
 demo.sdlandpipeline.scons
 demo.sdlsystem.scons
-demo.renderingpipeline.scons
 demo.resources.scons
+demo.playground.scons

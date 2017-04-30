@@ -2,14 +2,14 @@
 
 using Ballistic::Core::Types::Graphics::Mesh;
 using Ballistic::Core::Types::Graphics::Materials::Material;
-using Ballistic::Rendering::Vbo::Vbo;
+using Ballistic::Rendering::Renderable;
 
 namespace Ballistic {
 
     namespace Scene {
 
-        MeshNode::MeshNode(Mesh *mesh, Material *material, Vbo *vbo)
-        : Node(), mesh(mesh), material(material), vbo(vbo) {
+        MeshNode::MeshNode(Mesh *mesh, Material *material, Renderable *renderable)
+        : Node(), mesh(mesh), material(material), renderable(renderable) {
 
         }
 
@@ -21,14 +21,14 @@ namespace Ballistic {
             return material;
         }
         
-        Vbo * MeshNode::getVbo() {
-            return vbo;
+        Renderable * MeshNode::getRenderable() {
+            return renderable;
         }
         
         
         void MeshNode::draw(Ballistic::Rendering::Renderers::RendererInterface *renderer) {
             renderer->setTransformMatrix(&this->matrix);
-            renderer->renderVbo(this->vbo);
+            renderer->render(renderable);
         }
     }
 

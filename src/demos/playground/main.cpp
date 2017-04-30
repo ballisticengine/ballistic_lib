@@ -5,6 +5,7 @@
 #include "types/spatial/Vector3d.hpp"
 #include "SDL/SDLIoDriver.hpp"
 #include "../../rendering/renderingPipeline/RenderingPipeline.hpp"
+#include "../../rendering/renderable/Renderable.hpp"
 #include "../../rendering/renderers/GL/GLRenderer.hpp"
 #include "../../rendering/renderingPipeline/Tasks/BeginFrameTask.hpp"
 #include "../../rendering/renderingPipeline/Tasks/EndFrameTask.hpp"
@@ -41,6 +42,7 @@ using namespace Ballistic::Core::Resources::Storage;
 using namespace Ballistic::Loaders;
 using namespace Ballistic::Scene;
 using namespace Ballistic::Core::Calc;
+using Ballistic::Rendering::Renderable;
 
 int main() {
     FilesystemStorageHandler fs;
@@ -60,26 +62,20 @@ int main() {
     System *system = new System(io, mgr->getDispatcher());
     Ballistic::Rendering::Renderers::GLRenderer rdr;
     Ballistic::Rendering::Pipeline::RenderingPipeline rpl(&rdr);
-//    VboManager vboMgr;
-
+    
     Ballistic::Rendering::Pipeline::BeginFrameTask bft;
     Ballistic::Rendering::Pipeline::EndFrameTask eft;
     Ballistic::Scene::RenderSceneTask rst;
 
     MatrixCalculator mc;
 
-
     rpl.addTask("begin", &bft);
     rpl.addTask("sg", &rst);
 
     rpl.addTask("end", &eft);
-
-
     mgr->addModule("system", system);
     mgr->addModule("rendering", &rpl);
     mgr->addModule("resourceManager", &resMan);
-
-
 
     mgr->initialize("system");
     mgr->initialize("rendering");
@@ -94,15 +90,12 @@ int main() {
     rdr.setupTexture((Texture *) tH.getData());
 
     TransformNode scene, identityNode;
-
-
     
     scene.translate(Vector3d(0, 0, -10));
+    
+    Renderable *rend = rdr.makeRenderable(*m, *tmtl);
 
-
-    Ballistic::Rendering::Vbo::Vbo *vboV = rdr.makeVbo(*m, *tmtl);
-
-    MeshNode model(m, tmtl, vboV), model2(m, tmtl, vboV), model3(m, tmtl, vboV);
+    MeshNode model(m, tmtl, rend), model2(m, tmtl, rend), model3(m, tmtl, rend);
     model.translate(Vector3d(0, 0, 0));
     scene.addChild(&model);
     model2.translate(Vector3d(0, -5, -10));
@@ -114,10 +107,8 @@ int main() {
 
     scene.update();
     
-
     EventListener *el = new EventListener(&scene);
     TickListener *tl = new TickListener();
-
 
     mgr->getDispatcher()->addListener("ioEvent", el);
     mgr->getDispatcher()->addListener("ioTick", tl);

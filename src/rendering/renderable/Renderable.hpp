@@ -6,10 +6,10 @@
 
 namespace Ballistic {
     namespace Rendering {
-        namespace Vbo {
-            class Vbo {
+        
+            class Renderable {
             public:
-                Vbo(const Ballistic::Core::Types::Graphics::Mesh *mesh, 
+                Renderable(const Ballistic::Core::Types::Graphics::Mesh *mesh, 
                         const Ballistic::Core::Types::Graphics::Materials::Material *material,
                         void *rendererData);
                 
@@ -18,7 +18,7 @@ namespace Ballistic {
                 void *rendererData;
             };
         }
-    }
+    
 }
 
 #endif 

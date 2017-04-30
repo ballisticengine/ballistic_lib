@@ -8,7 +8,7 @@
 #include <GL/glu.h>
 
 #include "../RendererInterface.hpp"
-#include "../../VBO/Vbo.hpp"
+
 
 namespace Ballistic {
     namespace Rendering {
@@ -28,13 +28,13 @@ namespace Ballistic {
                 virtual void resize(int w, int h);
                 virtual void start();
                 virtual void end();
-                virtual Ballistic::Rendering::Vbo::Vbo *
-                makeVbo(const Ballistic::Core::Types::Graphics::Mesh &m,
+                virtual Ballistic::Rendering::Renderable*
+                makeRenderable(Ballistic::Core::Types::Graphics::Mesh &m,
                         Ballistic::Core::Types::Graphics::Materials::Material &mtl);
 
                 virtual void setTransformMatrix(Ballistic::Core::Types::Spatial::Matrix4 *matrix);
 
-                virtual void renderVbo(Ballistic::Rendering::Vbo::Vbo* vbo);
+                virtual void render(Ballistic::Rendering::Renderable* renderable);
 
 
 

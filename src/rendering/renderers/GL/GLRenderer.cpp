@@ -110,11 +110,11 @@ namespace Ballistic {
 
             }
 
-            Ballistic::Rendering::Vbo::Vbo
-            * GLRenderer::makeVbo(const Ballistic::Core::Types::Graphics::Mesh &m,
+            Ballistic::Rendering::Renderable*
+            GLRenderer::makeRenderable(Ballistic::Core::Types::Graphics::Mesh &m,
                     Ballistic::Core::Types::Graphics::Materials::Material &mtl) {
 
-                using Ballistic::Rendering::Vbo::Vbo;
+                using Ballistic::Rendering::Renderable;
 
                 GLfloat *tmpVerts = new GLfloat[m.n_vertices * 3];
                 GLfloat *tmpNorms = new GLfloat[m.n_vertices * 3];
@@ -149,7 +149,7 @@ namespace Ballistic {
                 }
 
                 GLVbo *vboData = new GLVbo();
-                Vbo *vbo = new Vbo(&m, 0, vboData);
+                Renderable *vbo = new Renderable(&m, 0, vboData);
 
 
                 vboData->vId;
@@ -231,11 +231,11 @@ namespace Ballistic {
 
             }
 
-            void GLRenderer::renderVbo(Ballistic::Rendering::Vbo::Vbo* vbo) {
+            void GLRenderer::render(Ballistic::Rendering::Renderable* renderable) {
                 using Ballistic::Core::Types::Graphics::Mesh;
 
-                GLVbo *glVbo = (GLVbo *) vbo->rendererData;
-                const Mesh *m = vbo->mesh;
+                GLVbo *glVbo = (GLVbo *) renderable->rendererData;
+                const Mesh *m = renderable->mesh;
 
                 glBindBuffer(GL_ARRAY_BUFFER, glVbo->vId);
 
@@ -263,7 +263,6 @@ namespace Ballistic {
             void GLRenderer::setTransformMatrix(Ballistic::Core::Types::Spatial::Matrix4 *matrix) {
                 glLoadMatrixf(matrix->get());
             }
-            
 
             void GLRenderer::setupTexture(Ballistic::Core::Types::Graphics::Texture *texture) {
                 GLuint texId;
