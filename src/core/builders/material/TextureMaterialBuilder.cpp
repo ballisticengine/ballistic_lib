@@ -19,7 +19,7 @@ namespace Ballistic {
                 uvMap->uvs = new UV[this->uvs.size()];
 
                 
-                size_t vertex_i, poly_i;
+                size_t vertex_i, poly_i=0;
 
                 for (auto i : this->polygons) {
                     vertex_i = 0;
