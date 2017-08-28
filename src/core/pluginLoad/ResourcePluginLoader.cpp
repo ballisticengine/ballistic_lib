@@ -21,7 +21,7 @@ namespace Ballistic {
 //}
 
 
-            Ballistic::Core::Resources::Loader * ResourcePluginLoader::getLoaderByType(std::string type) {
+            Ballistic::Core::Resources::Loader * ResourcePluginLoader::getLoaderByType( Ballistic::Core::Resources::ResourceType type) {
                 /*
                  TODO: Add map for types by priority to speed up this process
                  */

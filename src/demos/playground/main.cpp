@@ -27,6 +27,7 @@
 #include "../../scene/MeshNode.hpp"
 #include "../../scene/TransformNode.hpp"
 #include "../../core/calc/MatrixCalculator.hpp"
+#include "../../core/resources/loader/ResourceType.hpp"
 
 using namespace std;
 using namespace Ballistic::Core::Modules;
@@ -43,6 +44,7 @@ using namespace Ballistic::Loaders;
 using namespace Ballistic::Scene;
 using namespace Ballistic::Core::Calc;
 using Ballistic::Rendering::Renderable;
+using Ballistic::Core::Resources::ResourceType;
 
 int main() {
     FilesystemStorageHandler fs;
@@ -62,7 +64,7 @@ int main() {
     System *system = new System(io, mgr->getDispatcher());
     Ballistic::Rendering::Renderers::GLRenderer rdr;
     Ballistic::Rendering::Pipeline::RenderingPipeline rpl(&rdr);
-    
+
     Ballistic::Rendering::Pipeline::BeginFrameTask bft;
     Ballistic::Rendering::Pipeline::EndFrameTask eft;
     Ballistic::Scene::RenderSceneTask rst;
@@ -80,19 +82,19 @@ int main() {
     mgr->initialize("system");
     mgr->initialize("rendering");
 
-    ResourceHandle rH = resMan.get("untitled.xml", "meshAndMaterial");
+    ResourceHandle rH = resMan.get("untitled.xml", Ballistic::Core::Resources::RESOURCE_MESH_AND_MATERIAL);
     MeshAndMaterialResult *res = (MeshAndMaterialResult *) rH.getData();
     Mesh *m = res->mesh;
     Material *mtl = res->material;
     TextureMaterial *tmtl = (TextureMaterial *) mtl->getMaterialData();
-    ResourceHandle tH = resMan.get("tex.gif", "texture");
+    ResourceHandle tH = resMan.get("tex.gif", Ballistic::Core::Resources::RESOURCE_TEXTURE);
 
     rdr.setupTexture((Texture *) tH.getData());
 
     TransformNode scene, identityNode;
-    
+
     scene.translate(Vector3d(0, 0, -10));
-    
+
     Renderable *rend = rdr.makeRenderable(*m, *tmtl);
 
     MeshNode model(m, tmtl, rend), model2(m, tmtl, rend), model3(m, tmtl, rend);
@@ -102,11 +104,11 @@ int main() {
     scene.addChild(&model2);
     model3.translate(Vector3d(4, 0, 0));
     model2.addChild(&model3);
-    
+
     rst.setRootNode(&scene);
 
     scene.update();
-    
+
     EventListener *el = new EventListener(&scene);
     TickListener *tl = new TickListener();
 

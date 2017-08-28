@@ -13,7 +13,7 @@ namespace Ballistic {
                 return false;
             }
 
-            void Loader::addDependency(std::string resourceId, std::string type, void **target) {
+            void Loader::addDependency(std::string resourceId, ResourceType type, void **target) {
                 Dependency dep;
                 dep.resourceId = resourceId;
                 dep.target = target;

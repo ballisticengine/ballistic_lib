@@ -25,8 +25,7 @@ namespace Ballistic {
 
         public:
             virtual Ballistic::Core::Resources::extensionsSet getFileExtensions();
-            virtual std::string getType();
-            //TODO: below function should return struct with mesh, mtl and texture
+            virtual Ballistic::Core::Resources::ResourceType getType();
             virtual void *loadFromData(char *data, size_t size);
         };
     }

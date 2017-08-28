@@ -3,6 +3,7 @@
 
 #include <string>
 #include <map>
+#include "loader/ResourceType.hpp"
 
 namespace Ballistic {
     namespace Core {
@@ -15,11 +16,12 @@ namespace Ballistic {
             protected:
                 void *data;
                 size_t refCount;
-                std::string type, id;
+                std::string  id;
+                Ballistic::Core::Resources::ResourceType  type;
                 std::map <std::string, ResourceHandle *> children;
                 
             public:
-                ResourceHandle(std::string id, std::string type, void *data);
+                ResourceHandle(std::string id,  Ballistic::Core::Resources::ResourceType  type, void *data);
                 //TODO: link and unlink shouldn't be public
                 virtual std::string getId();
                 virtual void link();

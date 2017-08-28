@@ -3,13 +3,15 @@
 #include <string>
 
 #include "../ResourceHandle.hpp"
+#include "./ResourceType.hpp"
 
 namespace Ballistic {
     namespace Core {
         namespace Resources {
 
             struct Dependency {
-                std::string resourceId, type;
+                std::string resourceId;
+                Ballistic::Core::Resources::ResourceType type;
                 void **target;
                 
             };

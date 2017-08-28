@@ -7,6 +7,7 @@
 #include <map>
 
 #include "Dependency.hpp"
+#include "ResourceType.hpp"
 
 namespace Ballistic {
     namespace Core {
@@ -18,13 +19,13 @@ namespace Ballistic {
             class Loader {
             protected:
                 dependencyVector dependencies;
-                virtual void addDependency(std::string resourceId, std::string type, void **target);
+                virtual void addDependency(std::string resourceId, ResourceType type, void **target);
                 std::map<std::string, std::string> params;
             public:
                 Loader() {}
                 virtual ~Loader() {}
                 virtual extensionsSet getFileExtensions() = 0;
-                virtual std::string getType() = 0;
+                virtual ResourceType getType() = 0;
                 virtual size_t getPriority();                
                 virtual void *loadFromData(char *data, size_t size) = 0;
                 virtual bool handlesEntension(std::string extension);

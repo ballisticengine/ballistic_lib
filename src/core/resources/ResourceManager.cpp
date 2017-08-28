@@ -15,7 +15,7 @@ namespace Ballistic {
                 return this->pluginLoader;
             }
 
-            ResourceHandle & ResourceManager::get(std::string resourceId, std::string type) {
+            ResourceHandle & ResourceManager::get(std::string resourceId, Ballistic::Core::Resources::ResourceType type) {
 
                 if (resourceMap.find(resourceId) == resourceMap.end()) {
                     Loader *loader = (Loader *)this->pluginLoader.
@@ -23,19 +23,19 @@ namespace Ballistic {
 
                     using Ballistic::Core::Resources::Storage::FileData;
                     using Ballistic::Core::Resources::MeshAndMaterialResult;
-                    
+
                     FileData fileData = this->storageHandler->getResource(resourceId);
 
                     void *loadedData = loader->loadFromData(fileData.data, fileData.size);
-                    
-                    
+
+
                     ResourceHandle *handle = new
                             ResourceHandle(resourceId, type, loadedData);
 
 
                     this->resourceMap[resourceId] = handle;
                     this->resolveDependencies(loader);
-                    
+
                     return *handle;
                 } else {
                     return *this->resourceMap[resourceId];
@@ -46,10 +46,10 @@ namespace Ballistic {
             void ResourceManager::resolveDependencies(Loader *loader) {
                 dependencyVector dependencies = loader->getDependencies();
                 for (size_t i = 0; i < dependencies.size(); i++) {
-                    
+
                     ResourceHandle handle = this->get(dependencies[i].resourceId, dependencies[i].type);
                     *dependencies[i].target = handle.getData();
-                
+
                 }
                 loader->cleanDependencies();
             }

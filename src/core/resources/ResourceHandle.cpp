@@ -4,7 +4,7 @@ namespace Ballistic {
     namespace Core {
         namespace Resources {
 
-            ResourceHandle::ResourceHandle(std::string id, std::string type, void *data)
+            ResourceHandle::ResourceHandle(std::string id ,Ballistic::Core::Resources::ResourceType  type, void *data)
             : id(id), type(type), data(data)  {
                 //this->refCount = 1;
             }

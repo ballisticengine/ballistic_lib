@@ -6,6 +6,7 @@
 #include "../core/resources/storage/FilesystemStorageHandler.hpp"
 #include "../loaders/TextureLoader.hpp"
 #include "types/graphics/Texture.hpp"
+#include "../core/resources/loader/ResourceType.hpp"
 
 using Ballistic::Core::Resources::Storage::FilesystemStorageHandler;
 using Ballistic::Core::Resources::Storage::FileData;
@@ -24,8 +25,8 @@ public:
 
     }
 
-    virtual std::string getType() {
-        return "text";
+    virtual Ballistic::Core::Resources::ResourceType getType() {
+        return 666;
     }
 
     virtual void *loadFromData(char *data, size_t size) {
@@ -66,7 +67,7 @@ TEST_F(ResourceTest, ManagerStatic) {
 
     TestLoader *testLoader = new TestLoader();
     this->resMan->getLoader().registerStaticPlugin("testLoader", testLoader);
-    ResourceHandle resHandle = this->resMan->get("text.txt", "text");
+    ResourceHandle resHandle = this->resMan->get("text.txt", 666);
     // std::cout << "Res: " << (char *)resHandle.getData() << std::endl;
 
 }
@@ -75,7 +76,7 @@ TEST_F(ResourceTest, TextureLoader) {
     TextureLoader textureLoader;
     this->resMan->getLoader().registerStaticPlugin("textureLoader", &textureLoader);
 
-    ResourceHandle handle = this->resMan->get("tex.gif", "texture");
+    ResourceHandle handle = this->resMan->get("tex.gif", Ballistic::Core::Resources::RESOURCE_TEXTURE);
     Texture *tex = (Texture *) handle.getData();
 
     ASSERT_FALSE(tex == 0);

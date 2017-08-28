@@ -19,7 +19,7 @@ int main() {
     
     resMan.getLoader().registerStaticPlugin("loaderXML", &loaderXML);
     
-    resMan.get("untitled.xml", "mesh");
+    //resMan.get("untitled.xml", "mesh");
     
     return 0;
 }

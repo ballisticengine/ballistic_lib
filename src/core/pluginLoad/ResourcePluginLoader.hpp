@@ -5,7 +5,7 @@
 
 #include "PluginLoader.hpp"
 #include "../resources/loader/Loader.hpp"
-
+#include "../resources/loader/ResourceType.hpp"
 
 namespace Ballistic {
     namespace Core {
@@ -13,7 +13,7 @@ namespace Ballistic {
             class ResourcePluginLoader : public PluginLoader {
             public:
                 ResourcePluginLoader();
-                 Ballistic::Core::Resources::Loader * getLoaderByType(std::string type);
+                 Ballistic::Core::Resources::Loader * getLoaderByType( Ballistic::Core::Resources::ResourceType type);
                  
             };
         }

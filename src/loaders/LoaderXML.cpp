@@ -21,8 +21,8 @@ namespace Ballistic {
             return exts;
         }
 
-        std::string LoaderXML::getType() {
-            return "meshAndMaterial";
+      Ballistic::Core::Resources::ResourceType LoaderXML::getType() {
+            return Ballistic::Core::Resources::RESOURCE_MESH_AND_MATERIAL;
         }
 
         void *LoaderXML::loadFromData(char *data, size_t size) {
@@ -96,7 +96,7 @@ namespace Ballistic {
                     
                     if(textureId=="") {
                         textureId = face.second.get<string>("texture");
-                        this->addDependency(textureId, "texture", (void **)&tex);
+                        this->addDependency(textureId, Ballistic::Core::Resources::RESOURCE_TEXTURE, (void **)&tex);
                     }
                                        
                 } catch (std::exception e) {

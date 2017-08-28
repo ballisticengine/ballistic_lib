@@ -47,8 +47,8 @@ namespace Ballistic {
             return exts;
         }
 
-        std::string TextureLoader::getType() {
-            return "texture";
+        Ballistic::Core::Resources::ResourceType TextureLoader::getType() {
+             return Ballistic::Core::Resources::RESOURCE_TEXTURE;
         }
 
 
