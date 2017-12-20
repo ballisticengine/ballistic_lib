@@ -17,6 +17,10 @@ namespace Ballistic {
 
             ResourceHandle & ResourceManager::get(std::string resourceId, Ballistic::Core::Resources::ResourceType type) {
 
+                /*
+                 TODO: include file extension handling
+                 */
+                
                 if (resourceMap.find(resourceId) == resourceMap.end()) {
                     Loader *loader = (Loader *)this->pluginLoader.
                             getLoaderByType(type);

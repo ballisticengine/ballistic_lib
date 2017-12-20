@@ -6,7 +6,7 @@ namespace Ballistic {
 
              const ResourceType RESOURCE_TEXTURE = 0;
              const ResourceType RESOURCE_MESH = 1;
-             const ResourceType RESOURCE_MESH_AND_MATERIAL = 2;
+             const ResourceType RESOURCE_MESH_MATERIAL_TEXTURE = 2;
         }
     }
 }

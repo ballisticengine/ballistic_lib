@@ -22,7 +22,7 @@ namespace Ballistic {
         }
 
       Ballistic::Core::Resources::ResourceType LoaderXML::getType() {
-            return Ballistic::Core::Resources::RESOURCE_MESH_AND_MATERIAL;
+            return Ballistic::Core::Resources::RESOURCE_MESH_MATERIAL_TEXTURE;
         }
 
         void *LoaderXML::loadFromData(char *data, size_t size) {

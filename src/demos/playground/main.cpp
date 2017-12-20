@@ -21,6 +21,7 @@
 #include "../../core/resources/ResourceHandle.hpp"
 #include "../../core/resources/storage/FilesystemStorageHandler.hpp"
 #include "../../loaders/LoaderXML.hpp"
+#include "../../loaders/LoaderOBJ.hpp"
 #include "../../loaders/TextureLoader.hpp"
 #include "../../core/resources/loader/Results.hpp"
 #include "../../scene/Node.hpp"
@@ -53,9 +54,11 @@ int main() {
 
     LoaderXML loaderXML;
     TextureLoader textureLoader;
+    LoaderOBJ objLoader;
 
-    resMan.getLoader().registerStaticPlugin("loaderXML", &loaderXML);
+    //resMan.getLoader().registerStaticPlugin("loaderXML", &loaderXML);
     resMan.getLoader().registerStaticPlugin("textureLoader", &textureLoader);
+    resMan.getLoader().registerStaticPlugin("objLoader", &objLoader);
 
     ModuleManager *mgr = ModuleManager::get();
 
@@ -82,7 +85,10 @@ int main() {
     mgr->initialize("system");
     mgr->initialize("rendering");
 
-    ResourceHandle rH = resMan.get("untitled.xml", Ballistic::Core::Resources::RESOURCE_MESH_AND_MATERIAL);
+    
+   
+    ResourceHandle rH = resMan.get("untitled.xml", Ballistic::Core::Resources::RESOURCE_MESH);
+    
     MeshAndMaterialResult *res = (MeshAndMaterialResult *) rH.getData();
     Mesh *m = res->mesh;
     Material *mtl = res->material;

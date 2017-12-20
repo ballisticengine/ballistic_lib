@@ -8,7 +8,7 @@ namespace Ballistic {
 
             extern const ResourceType RESOURCE_TEXTURE;
             extern const ResourceType RESOURCE_MESH;
-            extern const ResourceType RESOURCE_MESH_AND_MATERIAL;
+            extern const ResourceType RESOURCE_MESH_MATERIAL_TEXTURE;
         }
     }
 }

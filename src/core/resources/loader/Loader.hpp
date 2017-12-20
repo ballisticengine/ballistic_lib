@@ -26,7 +26,10 @@ namespace Ballistic {
                 virtual ~Loader() {}
                 virtual extensionsSet getFileExtensions() = 0;
                 virtual ResourceType getType() = 0;
-                virtual size_t getPriority();                
+                virtual size_t getPriority();            
+                /*
+                 TODO: pass storage handler here
+                 */
                 virtual void *loadFromData(char *data, size_t size) = 0;
                 virtual bool handlesEntension(std::string extension);
                 virtual dependencyVector getDependencies();
