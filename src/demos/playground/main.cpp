@@ -56,7 +56,7 @@ int main() {
     TextureLoader textureLoader;
     LoaderOBJ objLoader;
 
-    //resMan.getLoader().registerStaticPlugin("loaderXML", &loaderXML);
+    resMan.getLoader().registerStaticPlugin("loaderXML", &loaderXML);
     resMan.getLoader().registerStaticPlugin("textureLoader", &textureLoader);
     resMan.getLoader().registerStaticPlugin("objLoader", &objLoader);
 
@@ -87,7 +87,7 @@ int main() {
 
     
    
-    ResourceHandle rH = resMan.get("untitled.xml", Ballistic::Core::Resources::RESOURCE_MESH);
+    ResourceHandle rH = resMan.get("untitled.xml", Ballistic::Core::Resources::RESOURCE_MESH_MATERIAL_TEXTURE);
     
     MeshAndMaterialResult *res = (MeshAndMaterialResult *) rH.getData();
     Mesh *m = res->mesh;

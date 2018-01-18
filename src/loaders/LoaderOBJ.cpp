@@ -25,7 +25,7 @@ namespace Ballistic {
         }
 
         Ballistic::Core::Resources::ResourceType LoaderOBJ::getType() {
-            return Ballistic::Core::Resources::RESOURCE_MESH;
+            return Ballistic::Core::Resources::RESOURCE_MESH_MATERIAL_TEXTURE;
         }
 
         int * LoaderOBJ::splitFace(char *faceStr) {
